@@ -1,5 +1,6 @@
-# Object file
-*.o
+Suchmasy/Suchmasy/bin
+Suchmasy/Suchmasy/obj
+Suchmasy/.vs
+Suchmasy/Suchmasy/ScaffoldingReadMe.txt
 
-# Ada Library Information
-*.ali
+
