@@ -3,11 +3,4 @@
 @{
 }
 
-<div>
-    @foreach (var supp in Model.SupplierList)
-    {
-        <div>
-            @supp.BrandName
-        </div>
-    }
-</div>
+@await  Component.InvokeAsync("Suppliers")
