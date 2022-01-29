@@ -5,8 +5,11 @@ using Suchmasy.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// docker command to up sql server container: 
+// docker run -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=ASDasd123' -p 1401:1433 -d mcr.microsoft.com/mssql/server
+
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("ContainerConnection");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
