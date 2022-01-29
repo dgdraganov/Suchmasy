@@ -10,7 +10,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => 
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
     options.Password.RequireUppercase = false;
     options.Password.RequireLowercase = false;
@@ -18,7 +18,14 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequiredLength = 3;
     options.Password.RequireDigit = false;
-}).AddEntityFrameworkStores<ApplicationDbContext>();
+}).AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("full_access", policy => 
+                                        policy.RequireRole("adminnn"));
+});
 
 builder.Services.AddRazorPages();
 
