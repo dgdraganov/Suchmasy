@@ -1,9 +1,5 @@
 
 version: "3.9"
-networks:
-    localdev: 
-        name: localdev
-
 services:
     web:
         build: .
@@ -11,12 +7,8 @@ services:
             - "7065:7065"
         depends_on:
             - db
-        networks:
-            - localdev
     db:
         image: "mcr.microsoft.com/mssql/server"
         environment:
             - SA_PASSWORD=ASDasd123
             - ACCEPT_EULA=Y
-        networks:
-            - localdev
