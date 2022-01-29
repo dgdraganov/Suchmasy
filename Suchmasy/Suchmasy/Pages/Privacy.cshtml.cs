@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace Suchmasy.Pages
 {
-    [Authorize(Policy = "full_access")]
+    // [Authorize(Roles = "adminnn")]
     public class PrivacyModel : PageModel
     {
         private readonly ILogger<PrivacyModel> _logger;
@@ -30,14 +30,18 @@ namespace Suchmasy.Pages
    
         public async Task OnGet()
         {
-            //var user = await uManager.GetUserAsync(HttpContext.User);
-
-            //var users = await uManager.GetUsersInRoleAsync("adminnn");
-            //var auth = await authService.AuthorizeAsync(User, "full_access");
-
+            ///var user = await uManager.GetUserAsync(HttpContext.User);
+            var claims = HttpContext.User.Claims;
         }
     }
 }
+
+
+//var user = await uManager.GetUserAsync(HttpContext.User);
+
+//var users = await uManager.GetUsersInRoleAsync("adminnn");
+//var auth = await authService.AuthorizeAsync(User, "full_access");
+
 // ======================================
 
 //var user = await uManager.GetUserAsync(HttpContext.User);

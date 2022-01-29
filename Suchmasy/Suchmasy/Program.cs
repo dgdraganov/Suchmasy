@@ -27,7 +27,13 @@ builder.Services.AddAuthorization(options =>
                                         policy.RequireRole("adminnn"));
 });
 
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(options =>
+{
+    // options.Conventions.AuthorizePage("/Contact");
+    options.Conventions.AuthorizePage("/Privacy", "full_access");
+    //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
+    //options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");
+});
 
 var app = builder.Build();
 
