@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Suchmasy;
 using Suchmasy.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,26 +17,33 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.Password.RequireLowercase = false;
     options.Password.RequiredUniqueChars = 1;
     options.Password.RequireNonAlphanumeric = false;
-    options.Password.RequiredLength = 3;
+    options.Password.RequiredLength = 6;
     options.Password.RequireDigit = false;
 }).AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+const string SUPPLIER_RELATIONSHIP = "supplier_relationship";
+
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("full_access", policy => 
-                                        policy.RequireRole("adminnn"));
+    options.AddPolicy(SUPPLIER_RELATIONSHIP, policy =>
+                                        policy.RequireAuthenticatedUser()
+                                              .RequireRole("admin", "buyer"));
 });
 
 builder.Services.AddRazorPages(options =>
 {
-    // options.Conventions.AuthorizePage("/Contact");
-    options.Conventions.AuthorizePage("/Privacy", "full_access");
+    options.Conventions.AuthorizePage("/Suppliers", SUPPLIER_RELATIONSHIP);
+    //options.Conventions.AuthorizePage("/Contact");
     //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
     //options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");
 });
 
 var app = builder.Build();
+
+// SEED initial data
+new InitialData(app.Services).Seed();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
