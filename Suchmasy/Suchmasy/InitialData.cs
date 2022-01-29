@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Suchmasy.Data;
+using Suchmasy.Models;
 using System.Security.Claims;
 
 namespace Suchmasy
@@ -18,40 +19,93 @@ namespace Suchmasy
         {
             using (var scope = _serviceProvider.CreateScope())
             {
-
-                // ------ APPLICATION DB CONTEXT ------
-                var dbContext = (ApplicationDbContext?)scope
-                                                .ServiceProvider
-                                                .GetService(typeof(ApplicationDbContext));
-                if (dbContext == null)
-                    throw new Exception($"Can not resolve {typeof(ApplicationDbContext)}");
-                
-                dbContext.Database.EnsureCreated();
-
-
-                // ------ USER MANAGER ------
-                var userManager = (UserManager<IdentityUser>?)scope
-                                                                .ServiceProvider
-                                                                .GetService(typeof(UserManager<IdentityUser>));
-                if (userManager == null)
-                    throw new Exception($"Can not resolve {typeof(UserManager<IdentityUser>)}");
-
-
-                // ------ ROLE MANAGER ------
-                var roleManager = (RoleManager<IdentityRole>?)scope
-                                                               .ServiceProvider
-                                                               .GetService(typeof(RoleManager<IdentityRole>));
-
-                if (roleManager == null)
-                    throw new Exception($"Can not resolve {typeof(RoleManager<IdentityRole>)}");
-
-                seed(userManager, roleManager);
-
+                seedUsersAndRoles(scope);
+                seedSuppliersAndOrders(scope);
             }
         }
 
+        private void seedUsersAndRoles(IServiceScope scope)
+        {
+            // ------ APPLICATION DB CONTEXT ------
+            var dbContext = (ApplicationDbContext?)scope
+                                           .ServiceProvider
+                                           .GetService(typeof(ApplicationDbContext));
+            if (dbContext == null)
+                throw new Exception($"Can not resolve {typeof(ApplicationDbContext)}");
+
+            dbContext.Database.EnsureCreated();
 
 
+            // ------ USER MANAGER ------
+            var userManager = (UserManager<IdentityUser>?)scope
+                                                            .ServiceProvider
+                                                            .GetService(typeof(UserManager<IdentityUser>));
+            if (userManager == null)
+                throw new Exception($"Can not resolve {typeof(UserManager<IdentityUser>)}");
+
+
+            // ------ ROLE MANAGER ------
+            var roleManager = (RoleManager<IdentityRole>?)scope
+                                                           .ServiceProvider
+                                                           .GetService(typeof(RoleManager<IdentityRole>));
+
+            if (roleManager == null)
+                throw new Exception($"Can not resolve {typeof(RoleManager<IdentityRole>)}");
+
+            seed(userManager, roleManager);
+        }
+
+        private void seedSuppliersAndOrders(IServiceScope scope)
+        {
+            // ------ APPLICATION DB CONTEXT ------
+            var dbContext = (ApplicationDbContext?)scope
+                                           .ServiceProvider
+                                           .GetService(typeof(ApplicationDbContext));
+
+            // -------------------- SUPPLIERS ---------------------------
+            //Supplier Cairs = 
+            //Supplier Lamps = ;
+            //Supplier Mattresses = ;
+
+            //Supplier Tables = ;
+
+            var suppliers = new List<Supplier>()
+            {
+                new Supplier(){
+                        Id = Guid.NewGuid(),
+                        BrandName = "Chairs Mate",
+                        Product = "Cairs",
+                        UnitPrice = 50
+                },new Supplier(){
+                        Id = Guid.NewGuid(),
+                        BrandName = "Lights ON",
+                        Product = "Lamps",
+                        UnitPrice = 50,
+                },new Supplier(){
+                        Id = Guid.NewGuid(),
+                        BrandName = "Sleepy Inc.",
+                        Product = "Mattresses",
+                        UnitPrice = 300
+                },new Supplier(){
+                        Id = Guid.NewGuid(),
+                        BrandName = "Top Tisch",
+                        Product = "Tables",
+                        UnitPrice = 250
+                }};
+
+            foreach (var supp in suppliers)
+            {
+                var exist = dbContext.Suppliers.Any(s => s.BrandName == supp.BrandName);
+                if (!exist)
+                    dbContext.Suppliers.AddRange(suppliers);
+            }
+
+            dbContext.SaveChanges();
+
+            // -------------------- SUPPLIERS ---------------------------
+
+
+        }
         private void seed(UserManager<IdentityUser> userManager,
                             RoleManager<IdentityRole> roleManager)
         {
@@ -100,7 +154,7 @@ namespace Suchmasy
             }
 
             var res = userManager.AddToRoleAsync(identityUser, role).Result;
-           
+
         }
 
         private void tryCreateUser(UserManager<IdentityUser> userManager, string email, string password)
@@ -135,7 +189,7 @@ namespace Suchmasy
             IdentityResult result = roleManager.CreateAsync(identityRole).Result;
             if (!result.Succeeded)
                 throw new Exception($"Can not create role {roleName}");
-            
+
         }
 
         private bool roleExists(RoleManager<IdentityRole> roleManager, string roleName)

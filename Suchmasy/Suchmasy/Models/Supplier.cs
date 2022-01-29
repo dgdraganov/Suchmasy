@@ -5,8 +5,6 @@
         public Guid Id { get; set; }
         public string BrandName { get; set; }
         public string Product { get; set; }
-        public decimal PricePreUnit { get; set; }
-        public string UnitOfMeasurment { get; set; }
-
+        public decimal UnitPrice { get; set; }
     }
 }

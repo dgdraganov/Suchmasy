@@ -12,8 +12,8 @@ namespace Suchmasy.Data
         {
         }
 
-        DbSet<Order> Orders { get; set; }
-        DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -21,17 +21,18 @@ namespace Suchmasy.Data
 
 
             builder.Entity<Order>()
-                .HasOne(o => o.Supplier);
+                .HasOne(o => o.Supplier)
+                .WithMany()
+                .HasForeignKey(o => o.SupplierId);
 
             builder.Entity<Order>(b =>
             {
                 b.HasKey(c => c.Id);
-                b.Property(c => c.BuyerId).IsRequired();
 
-                // Without referencing navigation properties (they're not there anyway)
                 b.HasOne<IdentityUser>()    // <---
                     .WithMany()       // <---
-                    .HasForeignKey(c => c.BuyerId);
+                    .HasForeignKey(c => c.BuyerId)
+                    .IsRequired();
             });
 
         }

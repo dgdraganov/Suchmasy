@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Suchmasy.Data;
 
@@ -11,9 +12,10 @@ using Suchmasy.Data;
 namespace Suchmasy.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220129225743_UpdatedOrdersAndSuppliers")]
+    partial class UpdatedOrdersAndSuppliers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -242,7 +244,11 @@ namespace Suchmasy.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SupplierId")
+                    b.Property<string>("SupplierId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("SupplierId1")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("TotalPrice")
@@ -255,7 +261,7 @@ namespace Suchmasy.Data.Migrations
 
                     b.HasIndex("BuyerId");
 
-                    b.HasIndex("SupplierId");
+                    b.HasIndex("SupplierId1");
 
                     b.ToTable("Orders");
                 });
@@ -343,7 +349,7 @@ namespace Suchmasy.Data.Migrations
 
                     b.HasOne("Suchmasy.Models.Supplier", "Supplier")
                         .WithMany()
-                        .HasForeignKey("SupplierId")
+                        .HasForeignKey("SupplierId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
