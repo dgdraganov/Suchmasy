@@ -20,7 +20,7 @@ namespace Suchmasy
             using (var scope = _serviceProvider.CreateScope())
             {
                 seedUsersAndRoles(scope);
-                seedSuppliersAndOrders(scope);
+                seedSuppliersProductsAndRequests(scope);
             }
         }
 
@@ -55,12 +55,46 @@ namespace Suchmasy
             seed(userManager, roleManager);
         }
 
-        private void seedSuppliersAndOrders(IServiceScope scope)
+        private void seedSuppliersProductsAndRequests(IServiceScope scope)
         {
             // ------ APPLICATION DB CONTEXT ------
             var dbContext = (ApplicationDbContext?)scope
                                            .ServiceProvider
                                            .GetService(typeof(ApplicationDbContext));
+
+            // -------------------- PRODUCTS ---------------------------
+            var chairsProd = new Product()
+            {
+                Id = Guid.NewGuid().ToString(),
+                ProductName = "Chairs"
+            };
+
+            var lampsProd = new Product()
+            {
+                Id = Guid.NewGuid().ToString(),
+                ProductName = "Lamps"
+            };
+
+            var mattressesProd = new Product()
+            {
+                Id = Guid.NewGuid().ToString(),
+                ProductName = "Mattresses",
+            };
+
+            var tablesProd = new Product()
+            {
+                Id = Guid.NewGuid().ToString(),
+                ProductName = "Tables"
+            };
+
+            var products = new List<Product>() { chairsProd, lampsProd, mattressesProd, tablesProd };
+
+            foreach (var prod in products)
+            {
+                var exist = dbContext.Products.Any(p => p.ProductName == prod.ProductName);
+                if (!exist)
+                    dbContext.Products.AddRange(products);
+            }
 
             // -------------------- SUPPLIERS ---------------------------
             var suppliers = new List<Supplier>()
@@ -68,40 +102,28 @@ namespace Suchmasy
                 new Supplier(){
                         Id = Guid.NewGuid().ToString(),
                         BrandName = "Chairs Mate",
-                        Product = new Product(){ 
-                            Id = Guid.NewGuid().ToString(),
-                            ProductName = "Chairs"
-                        },
+                        Product = chairsProd,
                         UnitPrice = 50,
                         Enabled = true,
                         PaymentTerms = 90,
                 },new Supplier(){
                         Id = Guid.NewGuid().ToString(),
                         BrandName = "Lights ON",
-                        Product = new Product(){
-                            Id = Guid.NewGuid().ToString(),
-                            ProductName = "Lamps"
-                        },
+                        Product = lampsProd,
                         UnitPrice = 50,
                         Enabled = true,
                         PaymentTerms = 60,
                 },new Supplier(){
                         Id = Guid.NewGuid().ToString(),
                         BrandName = "Sleepy Inc.",
-                        Product = new Product(){
-                            Id = Guid.NewGuid().ToString(),
-                            ProductName = "Mattresses",
-                        },
+                        Product = mattressesProd,
                         UnitPrice = 300,
                         Enabled = true,
                         PaymentTerms = 30,
                 },new Supplier(){
                         Id = Guid.NewGuid().ToString(),
                         BrandName = "Top Tisch",
-                        Product = new Product(){
-                            Id = Guid.NewGuid().ToString(),
-                            ProductName = "Tables"
-                        },
+                        Product = tablesProd,
                         UnitPrice = 250,
                         Enabled = false,
                         PaymentTerms = 90,
@@ -114,11 +136,43 @@ namespace Suchmasy
                     dbContext.Suppliers.AddRange(suppliers);
             }
 
+
+            // -------------------- REQUESTS ---------------------------
+
+            var anyRequests = dbContext.Requests.Any();
+            if (!anyRequests)
+            {
+                var requesterKiro = dbContext.Users.First(u => u.Email == "kiro.kirov@suchmasy.com");
+
+                var requests = new List<Request>()
+                            {
+                                new Request(){
+                                    Id = Guid.NewGuid().ToString(),
+                                    Product = chairsProd,
+                                    UnitsNeeded = 20,
+                                    RequesterId = requesterKiro.Id,
+                                    RequesterEmail = requesterKiro.Email,
+                                    Completed = false,
+                                    Text = "This product is needed for confidential reasons!This product is needed for confidential reasons!This product is needed for confidential reasons!"
+                                },
+                                new Request(){
+                                    Id = Guid.NewGuid().ToString(),
+                                    Product = tablesProd,
+                                    UnitsNeeded = 5,
+                                    RequesterId = requesterKiro.Id,
+                                    RequesterEmail = requesterKiro.Email,
+                                    Completed = true,
+                                    Text = "This product is needed for confidential reasons!"
+                                },
+                            };
+
+                dbContext.Requests.AddRange(requests);
+            }
+
+
+
+            // KEEP AT THE END:
             dbContext.SaveChanges();
-
-            // -------------------- SUPPLIERS ---------------------------
-
-
         }
         private void seed(UserManager<IdentityUser> userManager,
                             RoleManager<IdentityRole> roleManager)
@@ -130,6 +184,7 @@ namespace Suchmasy
 
             const string ROLE_ADMIN = "admin";
             const string ROLE_BUYER = "buyer";
+            const string ROLE_REQUESTER = "requester";
 
             // =========================== USERS ===============================
             // try add user "raiko.vasilev"
@@ -144,15 +199,19 @@ namespace Suchmasy
 
             // ============================ ROLES ==============================
             // try add role "admin"
-            tryCreateRole(roleManager, "admin");
+            tryCreateRole(roleManager, ROLE_ADMIN);
 
             // try add role "admin"
-            tryCreateRole(roleManager, "buyer");
+            tryCreateRole(roleManager, ROLE_BUYER);
+
+            // try add role "admin"
+            tryCreateRole(roleManager, ROLE_REQUESTER);
 
 
             // ============================ USER ROLES ==============================
             tryAddUserToRole(userManager, roleManager, raikoEmail, ROLE_ADMIN);
             tryAddUserToRole(userManager, roleManager, mitkoEmail, ROLE_BUYER);
+            tryAddUserToRole(userManager, roleManager, kiroEmail, ROLE_REQUESTER);
         }
 
         private void tryAddUserToRole(UserManager<IdentityUser> userManager,

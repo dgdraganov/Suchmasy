@@ -26,17 +26,23 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
 const string SUPPLIER_RELATIONSHIP = "supplier_relationship";
+const string REQUESTING = "requesting";
 
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy(SUPPLIER_RELATIONSHIP, policy =>
                                         policy.RequireAuthenticatedUser()
                                               .RequireRole("admin", "buyer"));
+
+    options.AddPolicy(REQUESTING, policy =>
+                                      policy.RequireAuthenticatedUser()
+                                            .RequireRole("admin", "requester"));
 });
 
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizePage("/Suppliers", SUPPLIER_RELATIONSHIP);
+    options.Conventions.AuthorizePage("/Requests", REQUESTING);
     //options.Conventions.AuthorizePage("/Contact");
     //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
     //options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");

@@ -9,37 +9,42 @@
     Suppliers:
 </h2>
 <div>
-    @foreach (var supp in Model)
-    {
-        @*@(statusString = supp.Enabled ? "enabled": "disabled")*@
-        <div class="container">
-            <div class="supplier-card">
-                <div class="col-sm-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title ">@supp.BrandName</h4>
-                            <p class="card-text">Produc:        @supp.Product.ProductName</p>
-                            <p class="card-text">Unit price:    @supp.UnitPrice EUR</p>
-                            <p class="card-text">Payment terms: @supp.PaymentTerms days</p>
+    <div class="container">
+        <div class="row">
 
-                            @if (supp.Enabled)
-                            {
-                                <a href="#" class="btn btn-primary">
-                                    Make order
-                                </a>
-                            }
-                            else
-                            {
-                                <a href="#" class="btn btn-secondary">
-                                    Disabled
-                                </a>
-                            }
+            @foreach (var supp in Model)
+            {
+        <div class="col-sm-6 col-md-4 col-lg-4">
 
+                <div class="supplier-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title ">@supp.BrandName</h4>
+                                <p class="card-text">Produc:        @supp.Product.ProductName</p>
+                                <p class="card-text">Unit price:    @supp.UnitPrice EUR</p>
+                                <p class="card-text">Payment terms: @supp.PaymentTerms days</p>
+
+                                @if (supp.Enabled)
+                                {
+                                    <a href="#" class="btn btn-primary">
+                                        Make order
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="#" class="btn btn-secondary disabled">
+                                        Disabled
+                                    </a>
+                                }
+
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+
+
+            }
         </div>
-    }
+    </div>
 </div>
 

@@ -5,10 +5,42 @@
 @model List<Request>
 
 <h2>
-    Open Requests:
+    Requests:
 </h2>
 
-    @foreach (var supp in Model)
-    {
 
-    }
+
+<div class="card-deck">
+    <div class="container">
+        <div class="row">
+            @foreach (var req in Model)
+            {
+                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@req.Product.ProductName</h5>
+                            <b class="card-text">Quantity: @req.UnitsNeeded</b>
+                            <p class="card-text">@req.Text</p>
+                            <p class="card-text"><small class="text-muted">Requester: @req.RequesterEmail</small></p>
+                            <p class="card-text"><small class="text-muted">Requested on: @req.PlacedOn</small></p>
+                            
+                                @if (!req.Completed)
+                                {
+                                    <a href="#" class="btn btn-primary">
+                                        Complete
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="#" class="btn btn-secondary disabled">
+                                        Completed
+                                    </a>
+                                }
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
