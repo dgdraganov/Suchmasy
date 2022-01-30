@@ -26,7 +26,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
 const string SUPPLIER_RELATIONSHIP = "supplier_relationship";
-const string REQUESTING = "requesting";
+const string MANAGING_REQUESTS = "managing_requests";
+const string CREATE_REQUESTS = "craete_requests";
 
 builder.Services.AddAuthorization(options =>
 {
@@ -34,15 +35,20 @@ builder.Services.AddAuthorization(options =>
                                         policy.RequireAuthenticatedUser()
                                               .RequireRole("admin", "buyer"));
 
-    options.AddPolicy(REQUESTING, policy =>
+    options.AddPolicy(MANAGING_REQUESTS, policy =>
                                       policy.RequireAuthenticatedUser()
                                             .RequireRole("admin", "requester", "buyer"));
+
+    options.AddPolicy(CREATE_REQUESTS, policy =>
+                                      policy.RequireAuthenticatedUser()
+                                            .RequireRole("admin", "requester"));
 });
 
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizePage("/Suppliers", SUPPLIER_RELATIONSHIP);
-    options.Conventions.AuthorizePage("/Requests", REQUESTING);
+    options.Conventions.AuthorizePage("/Requests", MANAGING_REQUESTS);
+    options.Conventions.AuthorizePage("/CreateRequest", MANAGING_REQUESTS);
     //options.Conventions.AuthorizePage("/Contact");
     //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
     //options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");

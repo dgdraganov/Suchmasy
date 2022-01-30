@@ -148,8 +148,8 @@ namespace Suchmasy
                             {
                                 new Request(){
                                     Id = Guid.NewGuid().ToString(),
-                                    Product = chairsProd,
-                                    UnitsNeeded = 20,
+                                    Product = "Cozy chairs",
+                                    Quantity = 20,
                                     RequesterId = requesterKiro.Id,
                                     RequesterEmail = requesterKiro.Email,
                                     PlacedOn = DateTime.Now,
@@ -158,8 +158,8 @@ namespace Suchmasy
                                 },
                                 new Request(){
                                     Id = Guid.NewGuid().ToString(),
-                                    Product = tablesProd,
-                                    UnitsNeeded = 5,
+                                    Product = "Big tables",
+                                    Quantity = 5,
                                     RequesterId = requesterKiro.Id,
                                     RequesterEmail = requesterKiro.Email,
                                     PlacedOn = DateTime.Now,

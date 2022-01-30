@@ -22,8 +22,8 @@
                 <div class="col-sm-6 col-md-4 col-lg-4 col-xl-3">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">@req.Product.ProductName</h4>
-                            <b class="card-text">Quantity: @req.UnitsNeeded</b>
+                            <h4 class="card-title">@req.Product</h4>
+                            <b class="card-text">Quantity: @req.Quantity</b>
                             <p class="card-text">@req.Text</p>
                             <p class="card-text"><small class="text-muted">Requester: @req.RequesterEmail</small></p>
                             <p class="card-text"><small class="text-muted">Requested on: @req.PlacedOn</small></p>
@@ -59,9 +59,6 @@
         </div>
     </div>
 </div>
-<div class="bottom-btns">
-<button type="button" class="btn btn-primary btn-lg">New Request</button>
-<button type="button" class="btn btn-secondary btn-lg">History</button>
-</div>
+
 
 

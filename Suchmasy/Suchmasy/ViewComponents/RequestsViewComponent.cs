@@ -17,7 +17,7 @@ namespace Suchmasy.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var users = _dbContext.Requests.Include(r => r.Product).ToList();
+            var users = _dbContext.Requests.ToList();
             return View(users);
         }
 

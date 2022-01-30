@@ -1,0 +1,37 @@
+﻿@page
+@model Suchmasy.Pages.CreateRequestModel
+@{
+}
+
+<form method="post">
+    <div class="new-request-form">
+    <div class="form-group row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="@Model.UserEmail">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="Product" class="col-sm-2 col-form-label">Product</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" asp-for="Product" placeholder="Product name...">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="Quantity" class="col-sm-2 col-form-label">Quantity</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" asp-for="Quantity" placeholder="Quantity ...">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="Description" class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" asp-for="Description" placeholder="Description ...">
+        </div>
+    </div>
+    </div>
+    <button class="btn btn-primary btn-lg" type="submit">Create</button>
+</form>
+
+
