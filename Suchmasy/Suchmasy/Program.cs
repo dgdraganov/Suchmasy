@@ -36,7 +36,7 @@ builder.Services.AddAuthorization(options =>
 
     options.AddPolicy(REQUESTING, policy =>
                                       policy.RequireAuthenticatedUser()
-                                            .RequireRole("admin", "requester"));
+                                            .RequireRole("admin", "requester", "buyer"));
 });
 
 builder.Services.AddRazorPages(options =>

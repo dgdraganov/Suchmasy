@@ -152,6 +152,7 @@ namespace Suchmasy
                                     UnitsNeeded = 20,
                                     RequesterId = requesterKiro.Id,
                                     RequesterEmail = requesterKiro.Email,
+                                    PlacedOn = DateTime.Now,
                                     Completed = false,
                                     Text = "This product is needed for confidential reasons!This product is needed for confidential reasons!This product is needed for confidential reasons!"
                                 },
@@ -161,6 +162,7 @@ namespace Suchmasy
                                     UnitsNeeded = 5,
                                     RequesterId = requesterKiro.Id,
                                     RequesterEmail = requesterKiro.Email,
+                                    PlacedOn = DateTime.Now,
                                     Completed = true,
                                     Text = "This product is needed for confidential reasons!"
                                 },

@@ -18,12 +18,17 @@ body {
 }
 
 .supplier-card{
-    margin: 20px
+    margin: 20px;
 }
 .supplier-status {
-    margin: 20px
+    margin: 20px;
 }
 
-/*.disabled{
-    background-color: lightslategrey
-}*/
+.requests-table {
+    margin: 20px;
+}
+
+.bottom-btns {
+    margin: 20px;
+    text-align: center;
+}
