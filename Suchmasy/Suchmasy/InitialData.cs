@@ -171,8 +171,6 @@ namespace Suchmasy
                 dbContext.Requests.AddRange(requests);
             }
 
-
-
             // KEEP AT THE END:
             dbContext.SaveChanges();
         }
@@ -183,6 +181,7 @@ namespace Suchmasy
             var raikoEmail = "raiko.vasilev@suchmasy.com";
             var mitkoEmail = "mitko.mitkov@suchmasy.com";
             var kiroEmail = "kiro.kirov@suchmasy.com";
+            var metoEmail = "meto.metov@suchmasy.com";
 
             const string ROLE_ADMIN = "admin";
             const string ROLE_BUYER = "buyer";
@@ -195,18 +194,21 @@ namespace Suchmasy
             // try add user "mitko.mitkov"
             tryCreateUser(userManager, mitkoEmail, defaultPassword);
 
-            // try add user "mitko.mitkov"
+            // try add user "kiro.kirov@suchmasy.com"
             tryCreateUser(userManager, kiroEmail, defaultPassword);
+
+            // try add user "meto.metov@suchmasy.com"
+            tryCreateUser(userManager, metoEmail, defaultPassword);
 
 
             // ============================ ROLES ==============================
             // try add role "admin"
             tryCreateRole(roleManager, ROLE_ADMIN);
 
-            // try add role "admin"
+            // try add role "buyer"
             tryCreateRole(roleManager, ROLE_BUYER);
 
-            // try add role "admin"
+            // try add role "requester"
             tryCreateRole(roleManager, ROLE_REQUESTER);
 
 
@@ -214,6 +216,7 @@ namespace Suchmasy
             tryAddUserToRole(userManager, roleManager, raikoEmail, ROLE_ADMIN);
             tryAddUserToRole(userManager, roleManager, mitkoEmail, ROLE_BUYER);
             tryAddUserToRole(userManager, roleManager, kiroEmail, ROLE_REQUESTER);
+            tryAddUserToRole(userManager, roleManager, metoEmail, ROLE_REQUESTER);
         }
 
         private void tryAddUserToRole(UserManager<IdentityUser> userManager,

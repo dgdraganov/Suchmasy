@@ -3,18 +3,14 @@
 *@
 @using Suchmasy.Models
 @model List<Request>
-
-<h3>
-    <div>
-        Requests
-    </div>
-  
-  <small class="text-muted">Goods or services needed by our company</small>
-</h3>
+@{
+    var userId = (string)TempData["UserId"];
+}
 
 
 
-<div class="card-deck requests-table">
+
+<div class="card-deck margin-20">
     <div class="container">
         <div class="row">
             @foreach (var req in Model)
@@ -37,7 +33,8 @@
                                         Complete
                                     </a>
                                 }
-                                @if (User.IsInRole("requester"))
+                                @if (User.IsInRole("requester") &&
+                                       userId == req.RequesterId)
                                 {
                                     <a href="#" class="btn btn-warning">
                                         Cancel

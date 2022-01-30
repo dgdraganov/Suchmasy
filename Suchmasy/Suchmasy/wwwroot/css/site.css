@@ -17,22 +17,13 @@ body {
   margin-bottom: 60px;
 }
 
-.supplier-card{
+.margin-20 {
     margin: 20px;
 }
-.supplier-status {
-    margin: 20px;
-}
-
-.requests-table {
-    margin: 20px;
-}
-
-.new-request-form {
-    margin: 20px;
+.margin-50 {
+    margin: 50px;
 }
 
 .bottom-btns {
-    margin: 20px;
     text-align: center;
 }

@@ -4,7 +4,7 @@
 }
 
 <form method="post">
-    <div class="new-request-form">
+    <div class="margin-20">
     <div class="form-group row">
         <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
         <div class="col-sm-10">
@@ -31,7 +31,12 @@
         </div>
     </div>
     </div>
-    <button class="btn btn-primary btn-lg" type="submit">Create</button>
+
+    <div class="bottom-btns">
+        <button class="btn btn-success btn-lg" type="submit">Create</button>
+         <a asp-area="" asp-page="/Requests" class="btn btn-info btn-lg" role="button">View Requests</a>
+       @* <button class="btn btn-primary btn-lg" type="submit">Cancel</button>*@
+    </div>
 </form>
 
 
