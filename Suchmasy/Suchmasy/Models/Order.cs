@@ -2,9 +2,9 @@
 {
     public class Order
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
-        public Guid SupplierId { get; set; }
+        public string SupplierId { get; set; }
         public Supplier Supplier { get; set; }
 
         public string Product { get; set; }
@@ -12,7 +12,7 @@
         public decimal TotalPrice { get; set; }
 
         public string BuyerId { get; set; }
-        public string BuyerName { get; set; }
+        public string BuyerEmail { get; set; }
 
         public DateTime PlacedOn { get; set; }
 

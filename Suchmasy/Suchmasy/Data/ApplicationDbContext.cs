@@ -14,6 +14,7 @@ namespace Suchmasy.Data
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Request> Requests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -35,6 +36,15 @@ namespace Suchmasy.Data
                     .IsRequired();
             });
 
+            builder.Entity<Request>(b =>
+            {
+                b.HasKey(c => c.Id);
+
+                b.HasOne<IdentityUser>()    // <---
+                    .WithMany()       // <---
+                    .HasForeignKey(c => c.RequesterId)
+                    .IsRequired();
+            });
         }
     }
 }

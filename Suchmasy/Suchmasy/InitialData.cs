@@ -66,28 +66,28 @@ namespace Suchmasy
             var suppliers = new List<Supplier>()
             {
                 new Supplier(){
-                        Id = Guid.NewGuid(),
+                        Id = Guid.NewGuid().ToString(),
                         BrandName = "Chairs Mate",
                         Product = "Cairs",
                         UnitPrice = 50,
                         Enabled = true,
                         PaymentTerms = 90,
                 },new Supplier(){
-                        Id = Guid.NewGuid(),
+                        Id = Guid.NewGuid().ToString(),
                         BrandName = "Lights ON",
                         Product = "Lamps",
                         UnitPrice = 50,
                         Enabled = true,
                         PaymentTerms = 60,
                 },new Supplier(){
-                        Id = Guid.NewGuid(),
+                        Id = Guid.NewGuid().ToString(),
                         BrandName = "Sleepy Inc.",
                         Product = "Mattresses",
                         UnitPrice = 300,
                         Enabled = true,
                         PaymentTerms = 30,
                 },new Supplier(){
-                        Id = Guid.NewGuid(),
+                        Id = Guid.NewGuid().ToString(),
                         BrandName = "Top Tisch",
                         Product = "Tables",
                         UnitPrice = 250,

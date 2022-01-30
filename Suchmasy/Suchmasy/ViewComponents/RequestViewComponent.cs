@@ -3,9 +3,9 @@ using Suchmasy.Data;
 
 namespace Suchmasy.ViewComponents
 {
-    public class SuppliersViewComponent : ViewComponent
+    public class RequestViewComponent : ViewComponent
     {
-        public SuppliersViewComponent(ApplicationDbContext dbContext)
+        public RequestViewComponent(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -14,8 +14,9 @@ namespace Suchmasy.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var users = _dbContext.Suppliers.ToList();
+            var users = _dbContext.Requests.ToList();
             return View(users);
         }
+
     }
 }
