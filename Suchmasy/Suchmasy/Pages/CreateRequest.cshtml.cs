@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Suchmasy.Data;
 using Suchmasy.Models;
+using Suchmasy.Models.DTO;
 
 namespace Suchmasy.Pages
 {
@@ -23,8 +24,10 @@ namespace Suchmasy.Pages
 
         [BindProperty]
         public string Product { get; set; }
+
         [BindProperty]
         public int Quantity { get; set; }
+
         [BindProperty]
         public string Description { get; set; }
 
@@ -34,10 +37,17 @@ namespace Suchmasy.Pages
             UserEmail = user.Email;
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPost(/*RequestModel request*/)
         {
             var user = _userManager.GetUserAsync(User).Result;
+            if (!ModelState.IsValid)
+            {
+                TempData["Success"] = false;
 
+                TempData["ErrorMessages"] = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToList();
+
+                return Redirect("/Requests");
+            }
             Request newReq = new Request()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -50,7 +60,7 @@ namespace Suchmasy.Pages
 
             _context.Add(newReq);
             _context.SaveChanges();
-            //LocalRedirect("./Pages/Requests");
+            TempData["Success"] = true;
             return Redirect("/Requests");
         }
     }

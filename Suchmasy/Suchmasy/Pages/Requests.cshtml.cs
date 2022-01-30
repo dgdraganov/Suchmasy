@@ -7,6 +7,7 @@ namespace Suchmasy.Pages
     {
         public void OnGet()
         {
+            var tempSucc = TempData["Success"];
         }
     }
 }
