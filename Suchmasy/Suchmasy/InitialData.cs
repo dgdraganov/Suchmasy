@@ -63,34 +63,36 @@ namespace Suchmasy
                                            .GetService(typeof(ApplicationDbContext));
 
             // -------------------- SUPPLIERS ---------------------------
-            //Supplier Cairs = 
-            //Supplier Lamps = ;
-            //Supplier Mattresses = ;
-
-            //Supplier Tables = ;
-
             var suppliers = new List<Supplier>()
             {
                 new Supplier(){
                         Id = Guid.NewGuid(),
                         BrandName = "Chairs Mate",
                         Product = "Cairs",
-                        UnitPrice = 50
+                        UnitPrice = 50,
+                        Enabled = true,
+                        PaymentTerms = 90,
                 },new Supplier(){
                         Id = Guid.NewGuid(),
                         BrandName = "Lights ON",
                         Product = "Lamps",
                         UnitPrice = 50,
+                        Enabled = true,
+                        PaymentTerms = 60,
                 },new Supplier(){
                         Id = Guid.NewGuid(),
                         BrandName = "Sleepy Inc.",
                         Product = "Mattresses",
-                        UnitPrice = 300
+                        UnitPrice = 300,
+                        Enabled = true,
+                        PaymentTerms = 30,
                 },new Supplier(){
                         Id = Guid.NewGuid(),
                         BrandName = "Top Tisch",
                         Product = "Tables",
-                        UnitPrice = 250
+                        UnitPrice = 250,
+                        Enabled = false,
+                        PaymentTerms = 90,
                 }};
 
             foreach (var supp in suppliers)
