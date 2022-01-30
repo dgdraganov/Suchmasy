@@ -152,8 +152,10 @@ namespace Suchmasy
                                     Quantity = 20,
                                     RequesterId = requesterKiro.Id,
                                     RequesterEmail = requesterKiro.Email,
-                                    PlacedOn = DateTime.Now,
-                                    Completed = false,
+                                    PlacedOn = new DateTime(2021, 1, 5, 10, 11,21),
+                                    Status = RequestStatus.Cancelled,
+                                    ClosedByEmail = requesterKiro.Email,
+                                    ClosedOn = DateTime.Now,
                                     Text = "This product is needed for confidential reasons!This product is needed for confidential reasons!This product is needed for confidential reasons!"
                                 },
                                 new Request(){
@@ -162,8 +164,20 @@ namespace Suchmasy
                                     Quantity = 5,
                                     RequesterId = requesterKiro.Id,
                                     RequesterEmail = requesterKiro.Email,
+                                    PlacedOn = new DateTime(2021, 5, 6, 15, 43,12),
+                                    Status = RequestStatus.Completed,
+                                    ClosedByEmail = requesterKiro.Email,
+                                    ClosedOn = DateTime.Now,
+                                    Text = "This product is needed for confidential reasons!"
+                                },
+                                new Request(){
+                                    Id = Guid.NewGuid().ToString(),
+                                    Product = "Big tables",
+                                    Quantity = 5,
+                                    RequesterId = requesterKiro.Id,
+                                    RequesterEmail = requesterKiro.Email,
                                     PlacedOn = DateTime.Now,
-                                    Completed = true,
+                                    Status = RequestStatus.Submitted,
                                     Text = "This product is needed for confidential reasons!"
                                 },
                             };

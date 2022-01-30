@@ -3,12 +3,9 @@
 @{
 }
 
-<h3 class="margin-50">
-      <div>
-         Suppliers
-      </div>
-      <small class="text-muted">Companies that provide the needed goods and services</small>
-</h3>
+
+@await  Component.InvokeAsync("LeadingTitle", new{ Title = "Suppliers", 
+                                                    Description = "Companies that provide the needed goods and services"})
 
 @await  Component.InvokeAsync("Suppliers")
 

@@ -52,10 +52,15 @@ namespace Suchmasy.Data
             {
                 b.HasKey(c => c.Id);
 
-                b.HasOne<IdentityUser>()    // <---
-                    .WithMany()       // <---
+                b.HasOne<IdentityUser>() 
+                    .WithMany()      
                     .HasForeignKey(c => c.RequesterId)
                     .IsRequired();
+
+                b.HasOne<IdentityUser>()   
+                    .WithMany()       
+                    .HasForeignKey(c => c.ClosedById)
+                    .OnDelete(DeleteBehavior.NoAction);
             });
         }
     }

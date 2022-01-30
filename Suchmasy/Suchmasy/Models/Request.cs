@@ -10,8 +10,18 @@
 
         public string RequesterId { get; set; }
         public string RequesterEmail { get; set; }
-        public bool Completed { get; set; }
+        public RequestStatus Status { get; set; }
 
+        public string? ClosedById { get; set; }
+        public string? ClosedByEmail { get; set; }
         public DateTime PlacedOn { get; set; }
+        public DateTime ClosedOn { get; set; }
+    }
+
+    public enum RequestStatus
+    {
+        Submitted,
+        Completed,
+        Cancelled
     }
 }

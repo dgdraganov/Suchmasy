@@ -27,7 +27,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 
 const string SUPPLIER_RELATIONSHIP = "supplier_relationship";
 const string MANAGING_REQUESTS = "managing_requests";
-const string CREATE_REQUESTS = "craete_requests";
+const string CREATE_REQUESTS = "create_requests";
 
 builder.Services.AddAuthorization(options =>
 {

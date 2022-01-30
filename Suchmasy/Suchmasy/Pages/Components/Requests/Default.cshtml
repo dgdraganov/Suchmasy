@@ -7,9 +7,6 @@
     var userId = (string)TempData["UserId"];
 }
 
-
-
-
 <div class="card-deck margin-20">
     <div class="container">
         <div class="row">
@@ -24,9 +21,9 @@
                             <p class="card-text"><small class="text-muted">Requester: @req.RequesterEmail</small></p>
                             <p class="card-text"><small class="text-muted">Requested on: @req.PlacedOn</small></p>
 
-                            @if (!req.Completed)
+                            @if (req.Status == RequestStatus.Submitted)
                             {
-                                <p class="card-text"><small class="text-muted">tatus: <b>Submitted</b></small></p>
+                                <p class="text-success card-text request-status"><small>@RequestStatus.Submitted</small></p>
                                 @if (User.IsInRole("buyer"))
                                 {
                                     <a href="#" class="btn btn-primary">
@@ -34,19 +31,21 @@
                                     </a>
                                 }
                                 @if (User.IsInRole("requester") &&
-                                       userId == req.RequesterId)
+                                    userId == req.RequesterId)
                                 {
                                     <a href="#" class="btn btn-warning">
                                         Cancel
                                     </a>
                                 }
                             }
-                            else
+                            else if (req.Status == RequestStatus.Completed)
                             {
-                                <p class="card-text"><small class="text-muted">Status: <b>Completed</b></small></p>
-                                @*<a href="#" class="btn btn-secondary disabled">
-                                    Completed
-                                    </a>*@
+                                <p class="text-primary card-text request-status"><small>@RequestStatus.Completed</small></p>
+                            }
+                            else if(req.Status == RequestStatus.Cancelled)
+                            {
+                                <p class="text-warning card-text request-status"><small>@RequestStatus.Cancelled</small></p>
+                                
                             }
 
                         </div>

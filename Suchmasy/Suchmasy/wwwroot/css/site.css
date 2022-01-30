@@ -25,5 +25,15 @@ body {
 }
 
 .bottom-btns {
-    text-align: center;
+    text-align: left;
+}
+
+.request-status {
+    text-align: right;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.leading-title {
+    border-bottom-width: 20px !important;
 }

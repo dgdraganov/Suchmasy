@@ -1,4 +1,5 @@
 ﻿@page
+@using Suchmasy.Models
 @model Suchmasy.Pages.RequestsModel
 @{
     var success = TempData["Success"];
@@ -14,7 +15,7 @@
             <p class="mb-0">Note! You can find and cancel the request at any point before its comletion.</p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    } 
+    }
     else if (success != null && !(bool)success && errMsgs != null)
     {
         var errors = errMsgs as string[];
@@ -31,22 +32,33 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
+} @*Request creation message SUCCESS/ERRORS*@
 
-}
+@*
+<div class="border border-success leading-title">
+    <h2 class="margin-50">
+        <div>
+
+            Requests
+        </div>
+        <small class="text-muted">Goods or services needed by our company</small>
+    </h2>
+</div>
+*@
+
+@await  Component.InvokeAsync("LeadingTitle", new{ Title = "Requests", 
+                                                    Description = "Goods or services needed by our company"})
 
 
-<h2 class="margin-50">
-    <div>
-       Requests
-    </div>
-    <small class="text-muted">Goods or services needed by our company</small>
-</h2>
-
-
-@await  Component.InvokeAsync("Requests")
 
 <div class="bottom-btns margin-20">
     <a asp-area="" asp-page="/CreateRequest" class="btn btn-success btn-lg margin-20" role="button">New Request</a>
-    <a href="#link" class="btn btn-info btn-lg margin-20" role="button">Completed</a>
-    <a href="#link" class="btn btn-info btn-lg margin-20" role="button">Canceled</a>
+    @*<a href="#link" class="btn btn-info btn-lg margin-20" role="button">Completed</a>
+        <a href="#link" class="btn btn-info btn-lg margin-20" role="button">Canceled</a>*@
 </div>
+
+@await  Component.InvokeAsync("Requests", new{ status = RequestStatus.Submitted})
+
+@await  Component.InvokeAsync("Requests", new{ status = RequestStatus.Completed})
+
+@await  Component.InvokeAsync("Requests", new{ status = RequestStatus.Cancelled})

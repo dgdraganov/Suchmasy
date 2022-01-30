@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Suchmasy.Data;
+using Suchmasy.Models;
 
 namespace Suchmasy.ViewComponents
 {
@@ -19,9 +20,9 @@ namespace Suchmasy.ViewComponents
         private ApplicationDbContext _dbContext { get; }
         private UserManager<IdentityUser> _userManager { get; }
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(RequestStatus status)
         {
-            var requests = _dbContext.Requests.ToList();
+            var requests = _dbContext.Requests.Where(r => r.Status == status).ToList();
 
             TempData["UserId"] = _userManager.GetUserId(HttpContext.User);
 
