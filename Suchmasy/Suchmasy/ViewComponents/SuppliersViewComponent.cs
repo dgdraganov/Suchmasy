@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Suchmasy.Data;
 
 namespace Suchmasy.ViewComponents
@@ -14,7 +15,7 @@ namespace Suchmasy.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var users = _dbContext.Suppliers.ToList();
+            var users = _dbContext.Suppliers.Include(s => s.Product).ToList();
             return View(users);
         }
     }

@@ -68,28 +68,40 @@ namespace Suchmasy
                 new Supplier(){
                         Id = Guid.NewGuid().ToString(),
                         BrandName = "Chairs Mate",
-                        Product = "Cairs",
+                        Product = new Product(){ 
+                            Id = Guid.NewGuid().ToString(),
+                            ProductName = "Chairs"
+                        },
                         UnitPrice = 50,
                         Enabled = true,
                         PaymentTerms = 90,
                 },new Supplier(){
                         Id = Guid.NewGuid().ToString(),
                         BrandName = "Lights ON",
-                        Product = "Lamps",
+                        Product = new Product(){
+                            Id = Guid.NewGuid().ToString(),
+                            ProductName = "Lamps"
+                        },
                         UnitPrice = 50,
                         Enabled = true,
                         PaymentTerms = 60,
                 },new Supplier(){
                         Id = Guid.NewGuid().ToString(),
                         BrandName = "Sleepy Inc.",
-                        Product = "Mattresses",
+                        Product = new Product(){
+                            Id = Guid.NewGuid().ToString(),
+                            ProductName = "Mattresses",
+                        },
                         UnitPrice = 300,
                         Enabled = true,
                         PaymentTerms = 30,
                 },new Supplier(){
                         Id = Guid.NewGuid().ToString(),
                         BrandName = "Top Tisch",
-                        Product = "Tables",
+                        Product = new Product(){
+                            Id = Guid.NewGuid().ToString(),
+                            ProductName = "Tables"
+                        },
                         UnitPrice = 250,
                         Enabled = false,
                         PaymentTerms = 90,

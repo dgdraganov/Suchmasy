@@ -7,7 +7,9 @@
         public string SupplierId { get; set; }
         public Supplier Supplier { get; set; }
 
-        public string Product { get; set; }
+        public string ProductId { get; set; }
+        public Product Product { get; set; }
+
         public decimal UnitPrice { get; set; }
         public decimal TotalPrice { get; set; }
 
