@@ -23,15 +23,12 @@ namespace Suchmasy.Pages
         public string SupplierId { get; set; }
         public string SupplierBrandName { get; set; }
         
-
         [BindProperty(SupportsGet = true)]
         public string ProductId { get; set; }
         public string ProductName { get; set; }
 
-
         [BindProperty(SupportsGet = true)]
         public decimal UnitPrice { get; set; }
-
 
         public string UserEmail { get; set; }
 
@@ -39,13 +36,14 @@ namespace Suchmasy.Pages
         [BindProperty]
         public int Quantity { get; set; }
 
-        public async void OnGet()
+        public async Task OnGet()
         {
             var user = await _userManager.GetUserAsync(User);
             UserEmail = await _userManager.GetEmailAsync(user);
 
             ProductName = _dbContext.Products.FirstOrDefault(p => p.Id == ProductId).ProductName;
             SupplierBrandName = _dbContext.Suppliers.FirstOrDefault(s => s.Id == SupplierId).BrandName;
+
         }
 
         public async Task<IActionResult> OnPost()
@@ -54,7 +52,7 @@ namespace Suchmasy.Pages
             {
                 TempData["Success"] = false;
                 TempData["ErrorMessages"] = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToList();
-                return Redirect("/Requests");
+                return Redirect("/Orders");
             }
 
             var user = await _userManager.GetUserAsync(User);
@@ -76,7 +74,7 @@ namespace Suchmasy.Pages
             _dbContext.Orders.Add(order);
             _dbContext.SaveChanges();
             TempData["Success"] = true;
-            return LocalRedirect("/Redirect");
+            return LocalRedirect("/Orders");
         }
     }
 }
