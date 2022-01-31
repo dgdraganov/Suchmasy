@@ -24,9 +24,16 @@
 
                                 @if (supp.Enabled)
                                 {
-                                    <a href="#" class="btn btn-primary">
-                                        Make order
-                                    </a>
+                                    <form asp-page="/CreateOrder" method="get">
+
+                                        <input type="hidden" id="SupplierId" name="SupplierId" value="@supp.Id" />
+                                        <input type="hidden" id="ProductId" name="ProductId" value="@supp.ProductId" />
+                                        <input type="hidden" id="UnitPrice" name="UnitPrice" value="@supp.UnitPrice" />
+                                        <button type="submit"> SubmiT </button>
+                                    </form>
+                                       <a asp-area="" asp-page="/CreateOrder" class="btn btn-primary" type="submit">
+                                            Make order
+                                        </a>
                                 }
                                 else
                                 {

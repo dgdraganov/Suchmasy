@@ -196,6 +196,7 @@ namespace Suchmasy
             var mitkoEmail = "mitko.mitkov@suchmasy.com";
             var kiroEmail = "kiro.kirov@suchmasy.com";
             var metoEmail = "meto.metov@suchmasy.com";
+            var requesterBuyerEmail = "requester.buyer@suchmasy.com";
 
             const string ROLE_ADMIN = "admin";
             const string ROLE_BUYER = "buyer";
