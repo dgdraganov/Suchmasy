@@ -3,7 +3,7 @@ using Suchmasy.Models;
 
 namespace Suchmasy.ViewComponents
 {
-    public class RequestCard : ViewComponent
+    public class RequestCardViewComponent : ViewComponent
     {
         public async Task<IViewComponentResult> InvokeAsync(Request requestCard)
         {
