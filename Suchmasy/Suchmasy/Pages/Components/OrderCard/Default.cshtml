@@ -1,0 +1,26 @@
+﻿@using Suchmasy.Models
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Order
+@{
+    var userId = (string)TempData["UserId"];
+}
+
+                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Order</h4>
+                            
+                            <p class="card-text">Supplier: @Model.Supplier.BrandName</p>
+                            <b class="card-text">Product: @Model.Product.ProductName</b>
+                            <b class="card-text">Quantity: @Model.Quantity</b>
+                            <b class="card-text">Unit price: @Model.UnitPrice</b>
+                            <b class="card-text">Toral price: @Model.TotalPrice</b>
+                            <p class="card-text"><small class="text-muted">Buyer: @Model.BuyerEmail</small></p>
+                            <p class="card-text"><small class="text-muted">Requested on: @Model.PlacedOn</small></p>
+                            <p class="text-success card-text request-status"><small>@RequestStatus.Submitted</small></p>
+
+                        </div>
+                    </div>
+                </div>

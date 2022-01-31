@@ -1,0 +1,53 @@
+﻿@page
+@using Suchmasy.Models
+@model Suchmasy.Pages.OrdersModel
+@{
+    var success = TempData["Success"];
+    var errMsgs = TempData["ErrorMessages"];
+
+    if (success != null && (bool)success)
+    {
+        //$('#created-success').show();
+        <div id="created-success" class="alert alert-success alert-dismissible fade show" role="alert">
+            <h4 class="alert-heading">Order created!</h4>
+            <p>Your order has been placed! The supplier is now responsible to execute it and provide further update to you!</p>
+            <hr>
+            <p class="mb-0">Note! Consider closing the respective request now when the order is placed!</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    else if (success != null && !(bool)success && errMsgs != null)
+    {
+        var errors = errMsgs as string[];
+        //$('#created-success').show();
+        <div id="created-success" class="alert alert-warning alert-dismissible fade show" role="alert">
+            <h4 class="alert-heading">Order not created!</h4>
+            <p>There was one or more problems creating your order:</p>
+            @foreach (var err in errors)
+            {
+                <div>
+                    @err
+                </div>
+            }
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+} @*Request creation message SUCCESS/ERRORS*@
+
+
+@await  Component.InvokeAsync("LeadingTitle", new{ Title = "Orders", 
+                                                    Description = "Goods or services we have requested from out suppliers"})
+
+
+
+<div class="bottom-btns margin-20">
+    <a asp-area="" asp-page="/CreateRequest" class="btn btn-success btn-lg margin-20" role="button">New Request</a>
+    @*<a href="#link" class="btn btn-info btn-lg margin-20" role="button">Completed</a>
+        <a href="#link" class="btn btn-info btn-lg margin-20" role="button">Canceled</a>*@
+</div>
+
+@await  Component.InvokeAsync("Requests", new{ status = RequestStatus.Submitted})
+
+@await  Component.InvokeAsync("Requests", new{ status = RequestStatus.Completed})
+
+@await  Component.InvokeAsync("Requests", new{ status = RequestStatus.Cancelled})
