@@ -11,16 +11,16 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Order</h4>
-                            
-                            <p class="card-text">Supplier: @Model.Supplier.BrandName</p>
-                            <b class="card-text">Product: @Model.Product.ProductName</b>
-                            <b class="card-text">Quantity: @Model.Quantity</b>
-                            <b class="card-text">Unit price: @Model.UnitPrice</b>
-                            <b class="card-text">Toral price: @Model.TotalPrice</b>
+                          
+                            <p class="card-text">Supplier:      <b>@Model.Supplier.BrandName</b></p>
+                            <p class="card-text">Product:       <b>@Model.Product.ProductName</b></p>
+                            <p class="card-text">Quantity:      <b>@Model.Quantity</b></p>
+                            <p class="card-text">Unit price:    <b>@Model.UnitPrice</b></p>
+                            <p class="card-text">Toral price:   <b>@Model.TotalPrice</b></p>
                             <p class="card-text"><small class="text-muted">Buyer: @Model.BuyerEmail</small></p>
                             <p class="card-text"><small class="text-muted">Requested on: @Model.PlacedOn</small></p>
-                            <p class="text-success card-text request-status"><small>@RequestStatus.Submitted</small></p>
-
+                            <p class="text-success card-text request-status">Ordered</p>
+                         
                         </div>
                     </div>
                 </div>

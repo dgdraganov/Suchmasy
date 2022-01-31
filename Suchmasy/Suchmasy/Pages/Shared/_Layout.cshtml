@@ -31,13 +31,16 @@
                          <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Requests">Requests</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Orders">Orders</a>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container page-background">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

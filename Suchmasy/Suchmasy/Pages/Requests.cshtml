@@ -2,7 +2,7 @@
 @using Suchmasy.Models
 @model Suchmasy.Pages.RequestsModel
 @{
-    var success = TempData["Success"];
+    var success = TempData["SuccessRequest"];
     var errMsgs = TempData["ErrorMessages"];
 
     if (success != null && (bool)success)

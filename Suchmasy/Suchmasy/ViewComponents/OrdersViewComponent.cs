@@ -22,14 +22,15 @@ namespace Suchmasy.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var requests = _dbContext.Orders.ToList();
+            var orders = _dbContext.Orders.Include(o => o.Product)
+                                            .Include(o => o.Supplier).ToList();
 
             //TempData["UserId"] = _userManager.GetUserId(HttpContext.User);
 
             //var userId 
             //_dbContext.Requests.FirstOrDefault(p => p.RequesterId.Equals(userId));
             //TempData["CanCancelRequest"] = User.IsInRole("requester");
-            return View(requests);
+            return View(orders);
         }
 
     }

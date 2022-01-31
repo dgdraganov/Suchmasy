@@ -10,7 +10,7 @@
         <div class="row">
             @foreach (var ord in Model)
             {
-                @await Component.InvokeAsync("RequestCard", new { orderCard = ord })
+                @await Component.InvokeAsync("OrderCard", new { orderCard = ord })
             }
         </div>
     </div>

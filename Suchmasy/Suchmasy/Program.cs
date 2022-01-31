@@ -49,6 +49,8 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AuthorizePage("/Suppliers", SUPPLIER_RELATIONSHIP);
     options.Conventions.AuthorizePage("/Requests", MANAGING_REQUESTS);
     options.Conventions.AuthorizePage("/CreateRequest", MANAGING_REQUESTS);
+    options.Conventions.AuthorizePage("/Orders", MANAGING_REQUESTS);
+    options.Conventions.AuthorizePage("/CreateOrder", SUPPLIER_RELATIONSHIP);
     //options.Conventions.AuthorizePage("/Contact");
     //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
     //options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");

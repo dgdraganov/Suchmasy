@@ -37,3 +37,11 @@ body {
 .leading-title {
     border-bottom-width: 20px !important;
 }
+
+.quote-source{
+    margin: 5px;
+}
+
+.quote-paragr{
+    font-size: large !important;
+}

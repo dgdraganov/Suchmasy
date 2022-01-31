@@ -35,7 +35,7 @@
 } @*Request creation message SUCCESS/ERRORS*@
 
 
-@await  Component.InvokeAsync("LeadingTitle", new{ Title = "Orders", 
+@await Component.InvokeAsync("LeadingTitle", new{ Title = "Orders", 
                                                     Description = "Goods or services we have requested from out suppliers"})
 
 
@@ -46,5 +46,5 @@
         <a href="#link" class="btn btn-info btn-lg margin-20" role="button">Canceled</a>*@
 </div>
 
-@*
-@await  Component.InvokeAsync("Requests", new{ status = RequestStatus.Submitted})*@
+
+@await Component.InvokeAsync("Orders")
