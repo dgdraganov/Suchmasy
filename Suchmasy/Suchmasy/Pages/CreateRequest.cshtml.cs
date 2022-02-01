@@ -59,6 +59,7 @@ namespace Suchmasy.Pages
                 PlacedOn = DateTime.Now
             };
 
+            // TODO: use repository 
 
             _context.Add(newReq);
             _context.SaveChanges();
