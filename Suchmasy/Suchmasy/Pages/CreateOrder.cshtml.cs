@@ -25,6 +25,7 @@ namespace Suchmasy.Pages
         
         [BindProperty(SupportsGet = true)]
         public string ProductId { get; set; }
+        public string RequestId { get; set; }
         public string ProductName { get; set; }
 
         [BindProperty(SupportsGet = true)]
@@ -69,6 +70,7 @@ namespace Suchmasy.Pages
                 BuyerId = userId,
                 BuyerEmail = userEmail,
                 PlacedOn = DateTime.Now,
+                RequestId = this.RequestId,
             };
 
             _dbContext.Orders.Add(order);

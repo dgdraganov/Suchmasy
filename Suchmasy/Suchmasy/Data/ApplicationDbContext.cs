@@ -27,23 +27,35 @@ namespace Suchmasy.Data
                 .HasForeignKey(s => s.ProductId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Entity<Order>()
-                .HasOne(o => o.Product)
-                .WithMany()
-                .HasForeignKey(o => o.ProductId);
-
-            builder.Entity<Order>()
-                .HasOne(o => o.Supplier)
-                .WithMany()
-                .HasForeignKey(o => o.SupplierId)
-                .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<Order>(b =>
             {
                 b.HasKey(c => c.Id);
 
-                b.HasOne<IdentityUser>()   
-                    .WithMany()      
+                b.HasOne<IdentityUser>()
+                    .WithMany()
+                    .HasForeignKey(c => c.BuyerId)
+                    .IsRequired();
+
+                b.HasOne(o => o.Supplier)
+                .WithMany()
+                .HasForeignKey(o => o.SupplierId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+                b.HasOne(o => o.Product)
+                .WithMany()
+                .HasForeignKey(o => o.ProductId);
+
+                b.HasOne(o => o.Request)
+                .WithOne(r => r.Order)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            });
+
+            builder.Entity<Order>(b =>
+            {
+                b.HasOne<IdentityUser>()
+                    .WithMany()
                     .HasForeignKey(c => c.BuyerId)
                     .IsRequired();
             });
@@ -52,13 +64,13 @@ namespace Suchmasy.Data
             {
                 b.HasKey(c => c.Id);
 
-                b.HasOne<IdentityUser>() 
-                    .WithMany()      
+                b.HasOne<IdentityUser>()
+                    .WithMany()
                     .HasForeignKey(c => c.RequesterId)
                     .IsRequired();
 
-                b.HasOne<IdentityUser>()   
-                    .WithMany()       
+                b.HasOne<IdentityUser>()
+                    .WithMany()
                     .HasForeignKey(c => c.ClosedById)
                     .OnDelete(DeleteBehavior.NoAction);
             });

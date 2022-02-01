@@ -10,21 +10,35 @@
 <div class="col-sm-6 col-md-4 col-lg-4 col-xl-3">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">@Model.Product</h4>
+            <h4 class="card-title request-title">@Model.Product</h4>
             <b class="card-text">Quantity: @Model.Quantity</b>
             <p class="card-text">@Model.Text</p>
             <p class="card-text"><small class="text-muted">Requester: @Model.RequesterEmail</small></p>
             <p class="card-text"><small class="text-muted">Requested on: @Model.PlacedOn</small></p>
 
+            @if (Model.Status != RequestStatus.Submitted)
+            {
+                <p class="card-text"><small class="text-muted">Closed by: @Model.ClosedByEmail</small></p>
+                <p class="card-text"><small class="text-muted">Closed on: @Model.ClosedOn</small></p>
+            }
+
+            <div class="d-flex justify-content-between align-items-center mb-3"> 
+                <input type="text" class="card-text" style="width: 180px" value="@Model.Id" readonly>
+                    <button onclick="copy('@Model.Id')" 
+                                id="@Model.Id" 
+                                class="btn btn-sm btn-success copy-button">Copy</button> 
+            </div>
+         
+
             @if (Model.Status == RequestStatus.Submitted)
             {
                 <p class="text-primary card-text request-status">@RequestStatus.Submitted</p>
-                @if (User.IsInRole("buyer"))
+                @*@if (User.IsInRole("buyer"))
                 {
                     <a href="#" class="btn btn-success">
                         Complete
                     </a>
-                }
+                }*@
                 @if (User.IsInRole("requester") &&
                userId == Model.RequesterId)
                 {

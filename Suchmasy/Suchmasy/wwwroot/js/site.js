@@ -19,9 +19,22 @@ function sleep(ms) {
 }
 
 $(document).ready(function () {
-
     sleep(3000).then(() => {
         $("#created-success").fadeOut(5000)
     });
-
 })
+
+function copy(text) {
+    let target = `#${text}`
+    setTimeout(function () {
+        $(target).html("Copy!")
+    }, 800);
+    $(target).html("Copied!");//append("<div class='tip' id='copied_tip'>Copied!</div>");
+    var input = document.createElement('input');
+    input.setAttribute('value', text);
+    document.body.appendChild(input);
+    input.select();
+    var result = document.execCommand('copy');
+    document.body.removeChild(input)
+    return result;
+}

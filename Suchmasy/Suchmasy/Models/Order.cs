@@ -15,6 +15,9 @@
         public decimal TotalPrice { get; set; }
 
         public string BuyerId { get; set; }
+        public string RequestId { get; set; }
+        public Request Request { get; set; }
+
         public string BuyerEmail { get; set; }
 
         public DateTime PlacedOn { get; set; }
