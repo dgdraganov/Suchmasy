@@ -56,6 +56,7 @@ namespace Suchmasy.Pages
                 Text = this.Description,
                 RequesterId = user.Id,
                 RequesterEmail = user.Email,
+                PlacedOn = DateTime.Now
             };
 
 
