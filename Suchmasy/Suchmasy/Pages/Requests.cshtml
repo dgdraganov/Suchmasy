@@ -34,17 +34,7 @@
     }
 } @*Request creation message SUCCESS/ERRORS*@
 
-@*
-<div class="border border-success leading-title">
-    <h2 class="margin-50">
-        <div>
 
-            Requests
-        </div>
-        <small class="text-muted">Goods or services needed by our company</small>
-    </h2>
-</div>
-*@
 
 @await  Component.InvokeAsync("LeadingTitle", new{ Title = "Requests", 
                                                     Description = "Goods or services needed by our company"})
@@ -53,8 +43,6 @@
 
 <div class="bottom-btns margin-20">
     <a asp-area="" asp-page="/CreateRequest" class="btn btn-success btn-lg margin-20" role="button">New Request</a>
-    @*<a href="#link" class="btn btn-info btn-lg margin-20" role="button">Completed</a>
-        <a href="#link" class="btn btn-info btn-lg margin-20" role="button">Canceled</a>*@
 </div>
 
  <hr />

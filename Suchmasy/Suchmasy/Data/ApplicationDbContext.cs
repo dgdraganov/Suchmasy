@@ -48,17 +48,11 @@ namespace Suchmasy.Data
 
                 b.HasOne(o => o.Request)
                 .WithOne(r => r.Order)
+                .HasForeignKey<Order>(o => o.RequestId)
                 .OnDelete(DeleteBehavior.NoAction);
-
             });
 
-            builder.Entity<Order>(b =>
-            {
-                b.HasOne<IdentityUser>()
-                    .WithMany()
-                    .HasForeignKey(c => c.BuyerId)
-                    .IsRequired();
-            });
+       
 
             builder.Entity<Request>(b =>
             {

@@ -165,9 +165,9 @@ namespace Suchmasy
                                     RequesterId = requesterKiro.Id,
                                     RequesterEmail = requesterKiro.Email,
                                     PlacedOn = new DateTime(2021, 5, 6, 15, 43,12),
-                                    Status = RequestStatus.Completed,
-                                    ClosedByEmail = requesterKiro.Email,
-                                    ClosedOn = DateTime.Now,
+                                    Status = RequestStatus.Submitted,
+                                    //ClosedByEmail = requesterKiro.Email,
+                                    //ClosedOn = DateTime.Now,
                                     Text = "This product is needed for confidential reasons!"
                                 },
                                 new Request(){

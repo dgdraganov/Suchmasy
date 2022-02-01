@@ -25,6 +25,8 @@ namespace Suchmasy.Pages
         
         [BindProperty(SupportsGet = true)]
         public string ProductId { get; set; }
+
+        [BindProperty]
         public string RequestId { get; set; }
         public string ProductName { get; set; }
 
@@ -72,6 +74,20 @@ namespace Suchmasy.Pages
                 PlacedOn = DateTime.Now,
                 RequestId = this.RequestId,
             };
+
+
+            var request = _dbContext.Requests.FirstOrDefault(r => r.Id == order.RequestId);
+            if (request == null)
+            {
+                TempData["ErrorMessages"] = new string[] { "Request Id is invalid!"};
+                return LocalRedirect("/Orders");
+            }
+            else if (request.Status != RequestStatus.Submitted)
+            {
+                TempData["ErrorMessages"] = new string[] { "Request is not active!" };
+                return LocalRedirect("/Orders");
+            }
+            request.Status = RequestStatus.Completed;
 
             _dbContext.Orders.Add(order);
             _dbContext.SaveChanges();
