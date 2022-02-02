@@ -26,7 +26,7 @@ namespace Suchmasy.Repos
         public bool SaveRequest(Request newRequest)
         {
             var req = GetRequestById(newRequest.Id);
-            if(req.Id.Equals(newRequest.Id))
+            if(req != null && req.Id.Equals(newRequest.Id))
             {
                 // Id already exists
                 return false; 

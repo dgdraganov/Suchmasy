@@ -44,7 +44,7 @@ namespace Suchmasy.Pages
         public IActionResult OnPost(/*RequestModel request*/)
         {
 
-            TempData["Success"] = false;
+            TempData["SuccessRequest"] = false;
 
             var user = _userManager.GetUserAsync(User).Result;
             if (!ModelState.IsValid)
@@ -68,7 +68,7 @@ namespace Suchmasy.Pages
             // TODO: use repository 
             if (_requestRepo.SaveRequest(newReq))
             {
-                TempData["Success"] = true;
+                TempData["SuccessRequest"] = true;
             }
 
             return Redirect("/Requests");
