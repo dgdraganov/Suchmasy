@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Suchmasy.Data;
 using Suchmasy.Models;
+using Suchmasy.Repos.Contracts;
 
 namespace Suchmasy.Repos
 {
-    public class RequestRepository
+    public class RequestRepository : IRequestRepository
     {
         public RequestRepository(ApplicationDbContext dbContext,
                                 UserManager<IdentityUser> userManager

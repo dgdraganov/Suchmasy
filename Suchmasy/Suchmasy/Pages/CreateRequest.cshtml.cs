@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Suchmasy.Data;
 using Suchmasy.Models;
 using Suchmasy.Models.DTO;
+using Suchmasy.Repos.Contracts;
 
 namespace Suchmasy.Pages
 {
@@ -11,14 +12,17 @@ namespace Suchmasy.Pages
     {
 
         public CreateRequestModel(UserManager<IdentityUser> userManager, 
-                                  ApplicationDbContext context)
+                                  ApplicationDbContext context,
+                                  IRequestRepository requestRepo)
         {
             _userManager = userManager;
             _context = context;
+            _requestRepo = requestRepo;
         }
 
         public UserManager<IdentityUser> _userManager { get; }
         public ApplicationDbContext _context { get; }
+        public IRequestRepository _requestRepo { get; }
 
         public string UserEmail { get; set; }
 
@@ -39,10 +43,12 @@ namespace Suchmasy.Pages
 
         public IActionResult OnPost(/*RequestModel request*/)
         {
+
+            TempData["Success"] = false;
+
             var user = _userManager.GetUserAsync(User).Result;
             if (!ModelState.IsValid)
             {
-                TempData["Success"] = false;
 
                 TempData["ErrorMessages"] = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToList();
 
@@ -60,10 +66,11 @@ namespace Suchmasy.Pages
             };
 
             // TODO: use repository 
+            if (_requestRepo.SaveRequest(newReq))
+            {
+                TempData["Success"] = true;
+            }
 
-            _context.Add(newReq);
-            _context.SaveChanges();
-            TempData["Success"] = true;
             return Redirect("/Requests");
         }
     }

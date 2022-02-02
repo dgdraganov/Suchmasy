@@ -10,7 +10,8 @@
         //$('#created-success').show();
         <div id="created-success" class="alert alert-success alert-dismissible fade show" role="alert">
             <h4 class="alert-heading">Request created!</h4>
-            <p>Your request is pending action from the responsible sourcing buyer. After the goods or services that you ordered are received you will be notified via the official communication channels!</p>
+            <p>Your request is pending action from the responsible sourcing buyer. After the goods or services that you ordered
+                are received you will be notified via the official communication channels!</p>
             <hr>
             <p class="mb-0">Note! You can find and cancel the request at any point before its comletion.</p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -36,18 +37,41 @@
 
 
 
-@await  Component.InvokeAsync("LeadingTitle", new{ Title = "Requests", 
-                                                    Description = "Goods or services needed by our company"})
-
-
+@await Component.InvokeAsync("LeadingTitle", new{ Title = "Requests",
+Description = "Goods or services needed by our company"})
 
 <div class="bottom-btns margin-20">
-    <a asp-area="" asp-page="/CreateRequest" class="btn btn-success btn-lg margin-20" role="button">New Request</a>
+    <a asp-area="" asp-page="/CreateRequest" class="btn btn-success btn-lg margin-20" role="button">
+        New Request
+    </a>
 </div>
 
- <hr />
-@await  Component.InvokeAsync("Requests", new{ status = RequestStatus.Submitted})
- <hr />
-@await  Component.InvokeAsync("Requests", new{ status = RequestStatus.Completed})
- <hr />
-@await  Component.InvokeAsync("Requests", new{ status = RequestStatus.Cancelled})
+<form method="post">
+    <div class="input-group mb-3" >
+        <span class="input-group-text bg-success">
+            @* badge *@
+            <button type="submit" class="btn btn-light">Search term</button>
+        </span>
+        <input type="text" class="form-control" asp-for="@Model.SearchTerm">
+    </div>
+</form>
+
+
+@if(Model.SearchTerm == null || Model.SearchTerm == string.Empty)
+{
+  
+    <hr />
+    @await Component.InvokeAsync("Requests", new{ status = RequestStatus.Submitted})
+
+    <hr />
+    @await Component.InvokeAsync("Requests", new{ status = RequestStatus.Completed})
+
+    <hr />
+    @await Component.InvokeAsync("Requests", new{ status = RequestStatus.Cancelled}) 
+}
+else {
+    <hr />
+    @await Component.InvokeAsync("Requests", new{ searchTerm = Model.SearchTerm})
+}
+
+

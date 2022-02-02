@@ -20,15 +20,23 @@ namespace Suchmasy.ViewComponents
         private ApplicationDbContext _dbContext { get; }
         private UserManager<IdentityUser> _userManager { get; }
 
-        public async Task<IViewComponentResult> InvokeAsync(RequestStatus status)
+        public async Task<IViewComponentResult> InvokeAsync(RequestStatus status, string searchTerm)
         {
-            var requests = _dbContext.Requests.Where(r => r.Status == status).ToList();
-
+            List<Request> requests = null;
+            if (searchTerm == null)
+            {
+                requests = _dbContext.Requests.Where(r => r.Status == status).ToList();
+            }
+            else
+            {
+                requests = _dbContext.Requests
+                    .Where(r => r.Text.Contains(searchTerm) || 
+                                r.Product.Contains(searchTerm))
+                    .ToList();
+            }
+          
             TempData["UserId"] = _userManager.GetUserId(HttpContext.User);
 
-            //var userId 
-            //_dbContext.Requests.FirstOrDefault(p => p.RequesterId.Equals(userId));
-            //TempData["CanCancelRequest"] = User.IsInRole("requester");
             return View(requests);
         }
 

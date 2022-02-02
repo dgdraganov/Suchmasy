@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Suchmasy;
 using Suchmasy.Data;
+using Suchmasy.Repos;
+using Suchmasy.Repos.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
     options.Password.RequireUppercase = false;
@@ -24,6 +27,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.Password.RequireDigit = false;
 }).AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddTransient<IRequestRepository, RequestRepository>();
 
 const string SUPPLIER_RELATIONSHIP = "supplier_relationship";
 const string MANAGING_REQUESTS = "managing_requests";
