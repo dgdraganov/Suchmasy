@@ -39,6 +39,5 @@ namespace Suchmasy.ViewComponents
 
             return View(requests);
         }
-
     }
 }

@@ -88,6 +88,8 @@ namespace Suchmasy.Pages
                 return LocalRedirect("/Orders");
             }
             request.Status = RequestStatus.Completed;
+            request.ClosedByEmail = userEmail;
+            request.ClosedOn = DateTime.Now;
 
             _dbContext.Orders.Add(order);
             _dbContext.SaveChanges();

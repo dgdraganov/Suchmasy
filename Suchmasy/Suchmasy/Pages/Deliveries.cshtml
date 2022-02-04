@@ -1,10 +1,10 @@
 ﻿@page
 @using Suchmasy.Models
-@model Suchmasy.Pages.RequestsModel
+@model Suchmasy.Pages.DeliveriesModel
 @{
-    var success = TempData["SuccessRequest"];
-    var errMsgs = TempData["ErrorMessages"];
-
+    @* var success = TempData["SuccessRequest"];
+    var errMsgs = TempData["ErrorMessages"]; *@
+@* 
     if (success != null && (bool)success)
     {
         //$('#created-success').show();
@@ -32,50 +32,35 @@
             }
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    }
+    } *@
 } @*Request creation message SUCCESS/ERRORS*@
 
+@await Component.InvokeAsync("LeadingTitle", new{ Title = "Deliveries", 
+                                                    Description = "Goods that need to be distributed to different locations"})
 
+<table class="table table-success table-striped">
+    <tr >
+        <th>Status</th>
+        <th>Destination Address</th>
+        <th>Order Id</th>
 
-@await Component.InvokeAsync("LeadingTitle", new{ Title = "Requests",
-Description = "Goods or services needed by our company"})
-
-<hr />
-
-@if (User.IsInRole("requester"))
-{
-    <div class="bottom-btns margin-20">
-        <a asp-area="" asp-page="/CreateRequest" class="btn btn-success btn-lg margin-20" role="button">
-            New Request
-        </a>
-    </div>
-}
-
-
-<form method="post">
-    <div class="input-group mb-3">
-        <span class="input-group-text bg-success">
-            @* badge *@
-            <button type="submit" class="btn btn-light">Search term</button>
-        </span>
-        <input type="text" class="form-control" asp-for="@Model.SearchTerm">
-    </div>
-</form>
-
-
-@if (Model.SearchTerm == null || Model.SearchTerm == string.Empty)
-{
-    <hr />
-    @await Component.InvokeAsync("Requests", new{ status = RequestStatus.Submitted})
-
-    <hr />
-    @await Component.InvokeAsync("Requests", new{ status = RequestStatus.Completed})
-
-    <hr />
-    @await Component.InvokeAsync("Requests", new{ status = RequestStatus.Cancelled})
-}
-else
-{
-    <hr />
-    @await Component.InvokeAsync("Requests", new{ searchTerm = Model.SearchTerm})
-}
+        <th>Driver Email</th>
+        <th>Created On</th>
+        <th>Delivered On</th>
+        <th>Details</th>
+    </tr>
+  @foreach (var del in Model.Deliveries)
+  {
+    <tr >
+        <td >@del.Status</td>
+        <td >@del.DestinationAddress</td>
+        <td >@del.OrderId</td>
+        <td >@del.DriverEmail</td>
+        <td >@del.CreatedOn</td>
+        <td >@del.DeliveredOn</td>
+        <td >
+            <button class="btn btn-success">View</button>
+        </td>
+    </tr>
+  }
+</table>

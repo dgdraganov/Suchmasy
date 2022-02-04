@@ -38,21 +38,30 @@ namespace Suchmasy.Data
                     .IsRequired();
 
                 b.HasOne(o => o.Supplier)
-                .WithMany()
-                .HasForeignKey(o => o.SupplierId)
-                .OnDelete(DeleteBehavior.NoAction);
+                    .WithMany()
+                    .HasForeignKey(o => o.SupplierId)
+                    .OnDelete(DeleteBehavior.NoAction);
 
                 b.HasOne(o => o.Product)
-                .WithMany()
-                .HasForeignKey(o => o.ProductId);
+                    .WithMany()
+                    .HasForeignKey(o => o.ProductId);
 
                 b.HasOne(o => o.Request)
-                .WithOne(r => r.Order)
-                .HasForeignKey<Order>(o => o.RequestId)
-                .OnDelete(DeleteBehavior.NoAction);
+                    .WithMany()
+                    .HasForeignKey(o => o.RequestId)
+                    .OnDelete(DeleteBehavior.NoAction);
             });
 
-       
+            builder.Entity<Delivery>(d => {
+                d.HasOne(d => d.Order)
+                .WithOne()
+                .HasForeignKey<Delivery>(d => d.OrderId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+                d.HasOne<IdentityUser>()
+                    .WithMany()
+                    .HasForeignKey(d => d.DriverId);
+            });
 
             builder.Entity<Request>(b =>
             {
