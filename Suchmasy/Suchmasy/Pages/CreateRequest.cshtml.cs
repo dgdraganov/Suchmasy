@@ -62,7 +62,8 @@ namespace Suchmasy.Pages
                 Text = this.Description,
                 RequesterId = user.Id,
                 RequesterEmail = user.Email,
-                PlacedOn = DateTime.Now
+                PlacedOn = DateTime.Now,
+                Status = RequestStatus.Submitted                
             };
 
             // TODO: use repository 

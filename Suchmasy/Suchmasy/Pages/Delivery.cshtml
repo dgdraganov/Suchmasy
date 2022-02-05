@@ -1,6 +1,6 @@
 ﻿@page
 @using Suchmasy.Models
-@model Suchmasy.Pages.DeliveriesModel
+@model Suchmasy.Pages.DeliveryModel
 @{
     @* var success = TempData["SuccessRequest"];
     var errMsgs = TempData["ErrorMessages"]; *@
@@ -35,34 +35,23 @@
     } *@
 } @*Request creation message SUCCESS/ERRORS*@
 
-@await Component.InvokeAsync("LeadingTitle", new{ Title = "Deliveries", 
-                                                    Description = "Goods that need to be distributed to different locations"})
+@await Component.InvokeAsync("LeadingTitle", new{ Title = "Delivery", 
+                                                    Description = "Single delivery"})
 
-<table class="table table-success table-striped">
-    <tr >
-        <th>Status</th>
-        <th>Destination Address</th>
-        <th>Order Id</th>
-
-        <th>Driver Email</th>
-        <th>Created On</th>
-        <th>Delivered On</th>
-        <th>Details</th>
-    </tr>
-  @foreach (var del in Model.Deliveries)
-  {
-    <tr >
-        <td >@del.Status</td>
-        <td >@del.DestinationAddress</td>
-        <td >@del.OrderId</td>
-
-        <td >@del.DriverEmail</td>
-        <td >@del.CreatedOn</td>
-        <td >@del.DeliveredOn</td>
-        <td >
-            @* <button class="btn btn-success">View</button> *@
-            <a asp-area="" asp-page="/Delivery" asp-route-id="@del.Id" class="btn btn-success btn-lg" role="button">View</a>
-        </td>
-    </tr>
-  }
-</table>
+<div>
+    <p>
+        @Model.Delivery.Id
+    </p>
+     <p>
+        @Model.Delivery.DestinationAddress
+    </p>
+     <p>
+        @Model.Delivery.DriverEmail
+    </p>
+     <p>
+        @Model.Delivery.OrderId
+    </p>
+    <p>
+        @Model.Delivery.Status
+    </p>
+</div>>

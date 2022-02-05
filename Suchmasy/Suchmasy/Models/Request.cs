@@ -21,6 +21,7 @@
 
     public enum RequestStatus
     {
+        // 0
         Submitted = 1,
         Completed = 2,
         Cancelled = 4

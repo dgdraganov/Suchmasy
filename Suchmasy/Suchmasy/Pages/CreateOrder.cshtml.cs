@@ -3,20 +3,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Suchmasy.Data;
 using Suchmasy.Models;
+using Suchmasy.Repos.Contracts;
 
 namespace Suchmasy.Pages
 {
     public class CreateOrderModel : PageModel
     {
         public CreateOrderModel(UserManager<IdentityUser> userManager,
-                                ApplicationDbContext dbContext)
+                                ApplicationDbContext dbContext,
+                                IDeliveryRepository delivRepo)
         {
             _userManager = userManager;
             _dbContext = dbContext;
+            _delivRepo = delivRepo;
         }
 
         public UserManager<IdentityUser> _userManager { get; }
         public ApplicationDbContext _dbContext { get; }
+        public IDeliveryRepository _delivRepo { get; }
 
 
         [BindProperty(SupportsGet = true)]
@@ -90,8 +94,24 @@ namespace Suchmasy.Pages
             request.Status = RequestStatus.Completed;
             request.ClosedByEmail = userEmail;
             request.ClosedOn = DateTime.Now;
+            // TODO: Order repo
+             _dbContext.Orders.Add(order);
+            _dbContext.SaveChanges();
 
-            _dbContext.Orders.Add(order);
+            // TODO: create order 
+            Delivery del = new Delivery(){
+                Id = Guid.NewGuid().ToString(),
+                CreatedOn = DateTime.Now,
+                DestinationAddress = "Karnobat, ul Stara planina 5",
+                DriverEmail = null,
+                DriverId = null,
+                OrderId = order.Id,
+                DeliveredOn = new DateTime(),
+                Status = DeliveryStatus.Generated
+            };
+
+            _delivRepo.SaveDelivery(del);
+
             _dbContext.SaveChanges();
             TempData["Success"] = true;
             return LocalRedirect("/Orders");

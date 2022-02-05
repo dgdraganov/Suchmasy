@@ -16,6 +16,7 @@ namespace Suchmasy.Data
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Request> Requests { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Delivery> Deliveries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -52,13 +53,21 @@ namespace Suchmasy.Data
                     .OnDelete(DeleteBehavior.NoAction);
             });
 
-            builder.Entity<Delivery>(d => {
+            builder.Entity<Delivery>(d =>
+            {
                 d.HasOne(d => d.Order)
-                .WithOne()
-                .HasForeignKey<Delivery>(d => d.OrderId)
-                .OnDelete(DeleteBehavior.NoAction);
+                    .WithOne()
+                    .HasForeignKey<Delivery>(d => d.OrderId)
+                    .OnDelete(DeleteBehavior.NoAction);
 
                 d.HasOne<IdentityUser>()
+                    .WithMany()
+                    .HasForeignKey(d => d.DriverId);
+            });
+
+            builder.Entity<Delivery>(b =>
+            {
+                b.HasOne<IdentityUser>()
                     .WithMany()
                     .HasForeignKey(d => d.DriverId);
             });
