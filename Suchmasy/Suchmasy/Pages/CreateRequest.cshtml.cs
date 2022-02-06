@@ -49,9 +49,7 @@ namespace Suchmasy.Pages
             var user = _userManager.GetUserAsync(User).Result;
             if (!ModelState.IsValid)
             {
-
                 TempData["ErrorMessages"] = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToList();
-
                 return Redirect("/Requests");
             }
             Request newReq = new Request()

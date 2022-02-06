@@ -20,7 +20,8 @@ namespace Suchmasy.Repos
 
         public Request GetRequestById(string id)
         {
-            return _dbContext.Requests.FirstOrDefault(r => r.Id.Equals(id));
+            return _dbContext.Requests
+                        .FirstOrDefault(r => r.Id.Equals(id));
         }
 
         public bool SaveRequest(Request newRequest)

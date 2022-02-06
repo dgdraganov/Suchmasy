@@ -30,6 +30,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 
 builder.Services.AddTransient<IRequestRepository, RequestRepository>();
 builder.Services.AddTransient<IDeliveryRepository, DeliveryRepository>();
+builder.Services.AddTransient<IOrderRepository, OrderRepository>();
 
 const string SUPPLIER_RELATIONSHIP = "supplier_relationship";
 const string MANAGING_REQUESTS = "managing_requests";

@@ -47,4 +47,15 @@
 </div>
 
 
-@await Component.InvokeAsync("Orders")
+@* @await Component.InvokeAsync("Orders") *@
+
+<div class="card-deck margin-20">
+    <div class="container">
+        <div class="row">
+            @foreach (var ord in Model.Orders)
+            {
+                @await Component.InvokeAsync("OrderCard", new { orderCard = ord })
+            }
+        </div>
+    </div>
+</div>
