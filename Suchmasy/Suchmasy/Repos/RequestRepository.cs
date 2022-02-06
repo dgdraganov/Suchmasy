@@ -18,6 +18,24 @@ namespace Suchmasy.Repos
         public ApplicationDbContext _dbContext { get; set; }
         public UserManager<IdentityUser> _userManager { get; set; }
 
+        public bool CompleteRequest(string id, string userEmail)
+        {
+            var request = _dbContext.Requests.FirstOrDefault(r => r.Id == id);
+            if (request == null)
+            {
+                return false;
+            }
+            else if (request.Status != RequestStatus.Submitted)
+            {
+                return false;
+            }
+
+            request.Status = RequestStatus.Completed;
+            request.ClosedByEmail = userEmail;
+            request.ClosedOn = DateTime.Now;
+            return true;
+        }
+
         public Request GetRequestById(string id)
         {
             return _dbContext.Requests

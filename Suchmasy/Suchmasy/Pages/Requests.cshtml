@@ -44,13 +44,12 @@ Description = "Goods or services needed by our company"})
 
 @if (User.IsInRole("requester"))
 {
-    <div class="bottom-btns margin-20">
+    <div class="bottom-btns margin-20 request-title">
         <a asp-area="" asp-page="/CreateRequest" class="btn btn-success btn-lg margin-20" role="button">
             New Request
         </a>
     </div>
 }
-
 
 <form method="post">
     <div class="input-group mb-3">

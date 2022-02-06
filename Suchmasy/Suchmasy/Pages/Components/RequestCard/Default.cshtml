@@ -33,12 +33,7 @@
             @if (Model.Status == RequestStatus.Submitted)
             {
                 <p class="text-primary card-text request-status">@RequestStatus.Submitted</p>
-                @*@if (User.IsInRole("buyer"))
-                {
-                    <a href="#" class="btn btn-success">
-                        Complete
-                    </a>
-                }*@
+
                 @if (User.IsInRole("requester") &&
                userId == Model.RequesterId)
                 {

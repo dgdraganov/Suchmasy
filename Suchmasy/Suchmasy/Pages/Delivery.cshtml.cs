@@ -14,8 +14,8 @@ namespace Suchmasy.Pages
         }
 
         public IDeliveryRepository _deliveryRepo { get; }
-
         public Delivery Delivery { get; set; }
+        
         public void OnGet(string id)
         {
 

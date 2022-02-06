@@ -11,16 +11,22 @@ namespace Suchmasy.Pages
     {
         public CreateOrderModel(UserManager<IdentityUser> userManager,
                                 ApplicationDbContext dbContext,
-                                IDeliveryRepository delivRepo)
+                                IDeliveryRepository delivRepo,
+                                IOrderRepository orderRepo,
+                                IRequestRepository requestRepo)
         {
             _userManager = userManager;
             _dbContext = dbContext;
             _delivRepo = delivRepo;
+            _requestRepo = requestRepo;
+            _ordRepo = orderRepo;
         }
 
         public UserManager<IdentityUser> _userManager { get; }
         public ApplicationDbContext _dbContext { get; }
         public IDeliveryRepository _delivRepo { get; }
+        public IOrderRepository _ordRepo { get; }
+        public IRequestRepository _requestRepo { get; }
 
 
         [BindProperty(SupportsGet = true)]
@@ -55,9 +61,9 @@ namespace Suchmasy.Pages
 
         public async Task<IActionResult> OnPost()
         {
+            TempData["Success"] = false;
             if (!ModelState.IsValid)
             {
-                TempData["Success"] = false;
                 TempData["ErrorMessages"] = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToList();
                 return Redirect("/Orders");
             }
@@ -79,26 +85,11 @@ namespace Suchmasy.Pages
                 RequestId = this.RequestId,
             };
 
+            var res = _requestRepo
+                    .CompleteRequest(order.RequestId, userEmail);
 
-            var request = _dbContext.Requests.FirstOrDefault(r => r.Id == order.RequestId);
-            if (request == null)
-            {
-                TempData["ErrorMessages"] = new string[] { "Request Id is invalid!"};
-                return LocalRedirect("/Orders");
-            }
-            else if (request.Status != RequestStatus.Submitted)
-            {
-                TempData["ErrorMessages"] = new string[] { "Request is not active!" };
-                return LocalRedirect("/Orders");
-            }
-            request.Status = RequestStatus.Completed;
-            request.ClosedByEmail = userEmail;
-            request.ClosedOn = DateTime.Now;
-            // TODO: Order repo
-             _dbContext.Orders.Add(order);
-            _dbContext.SaveChanges();
+            _ordRepo.SaveOrder(order);
 
-            // TODO: create order 
             Delivery del = new Delivery(){
                 Id = Guid.NewGuid().ToString(),
                 CreatedOn = DateTime.Now,

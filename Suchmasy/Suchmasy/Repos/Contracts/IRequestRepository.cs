@@ -7,5 +7,6 @@ namespace Suchmasy.Repos.Contracts
         bool SaveRequest(Request request);
         bool SetStatus(string reqId, string actionedById, RequestStatus status);
         Request GetRequestById(string id);
+        bool CompleteRequest(string id, string userEmail);
     }
 }

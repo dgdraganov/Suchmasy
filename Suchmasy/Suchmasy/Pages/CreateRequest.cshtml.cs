@@ -41,7 +41,7 @@ namespace Suchmasy.Pages
             UserEmail = user.Email;
         }
 
-        public IActionResult OnPost(/*RequestModel request*/)
+        public IActionResult OnPost()
         {
 
             TempData["SuccessRequest"] = false;
@@ -52,6 +52,7 @@ namespace Suchmasy.Pages
                 TempData["ErrorMessages"] = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToList();
                 return Redirect("/Requests");
             }
+            
             Request newReq = new Request()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -64,7 +65,6 @@ namespace Suchmasy.Pages
                 Status = RequestStatus.Submitted                
             };
 
-            // TODO: use repository 
             if (_requestRepo.SaveRequest(newReq))
             {
                 TempData["SuccessRequest"] = true;

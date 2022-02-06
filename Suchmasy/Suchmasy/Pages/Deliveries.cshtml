@@ -2,38 +2,7 @@
 @using Suchmasy.Models
 @model Suchmasy.Pages.DeliveriesModel
 @{
-    @* var success = TempData["SuccessRequest"];
-    var errMsgs = TempData["ErrorMessages"]; *@
-@* 
-    if (success != null && (bool)success)
-    {
-        //$('#created-success').show();
-        <div id="created-success" class="alert alert-success alert-dismissible fade show" role="alert">
-            <h4 class="alert-heading">Request created!</h4>
-            <p>Your request is pending action from the responsible sourcing buyer. After the goods or services that you ordered
-                are received you will be notified via the official communication channels!</p>
-            <hr>
-            <p class="mb-0">Note! You can find and cancel the request at any point before its comletion.</p>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    }
-    else if (success != null && !(bool)success && errMsgs != null)
-    {
-        var errors = errMsgs as string[];
-        //$('#created-success').show();
-        <div id="created-success" class="alert alert-warning alert-dismissible fade show" role="alert">
-            <h4 class="alert-heading">Request not created!</h4>
-            <p>There was one or more problems creating your request:</p>
-            @foreach (var err in errors)
-            {
-                <div>
-                    @err
-                </div>
-            }
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    } *@
-} @*Request creation message SUCCESS/ERRORS*@
+}
 
 @await Component.InvokeAsync("LeadingTitle", new{ Title = "Deliveries", 
                                                     Description = "Goods that need to be distributed to different locations"})
