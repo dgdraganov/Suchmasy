@@ -55,10 +55,10 @@ options.AddPolicy(CREATE_REQUESTS, policy =>
 options.AddPolicy(ADMIN_ACCESS, policy =>
                               policy.RequireAuthenticatedUser()
                                     .RequireRole("admin"));
-// =========================================================
-options.AddPolicy("password_changed-policy", policy =>
-                          policy.RequireAuthenticatedUser()
-                                .RequireClaim("PasswordChanged"));
+    // =========================================================
+    options.AddPolicy("password_changed-policy", policy =>
+                              policy.RequireAuthenticatedUser()
+                                    .RequireClaim("PasswordChanged"));
 });
 
 builder.Services.AddRazorPages(options =>
@@ -66,7 +66,7 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AuthorizePage("/Suppliers", SUPPLIER_RELATIONSHIP);
 
     // -----------------------------------------------------------
-    options.Conventions.AuthorizePage("/Privacy", "password_changed-policy");
+    options.Conventions.AuthorizePage("/", "password_changed-policy");
 
     options.Conventions.AuthorizePage("/Requests", MANAGING_REQUESTS);
     options.Conventions.AuthorizePage("/CreateRequest", MANAGING_REQUESTS);

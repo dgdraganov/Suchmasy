@@ -261,6 +261,7 @@ namespace Suchmasy
             user.EmailConfirmed = true;
 
             var res = userManager.CreateAsync(user, password).Result;
+            var claimAdded = userManager.AddClaimAsync(user, new Claim("PasswordChanged", "")).Result;
             if (!res.Succeeded)
                 throw new Exception($"Can not create new user {user.UserName}");
         }
