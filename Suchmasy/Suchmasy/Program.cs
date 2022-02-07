@@ -37,26 +37,28 @@ const string SUPPLIER_RELATIONSHIP = "supplier_relationship";
 const string MANAGING_REQUESTS = "managing_requests";
 const string CREATE_REQUESTS = "create_requests";
 const string ADMIN_ACCESS = "admin_access";
+const string PASSWORD_CHANGED = "password_changed";
+
 
 builder.Services.AddAuthorization(options =>
 {
-options.AddPolicy(SUPPLIER_RELATIONSHIP, policy =>
-                                    policy.RequireAuthenticatedUser()
-                                          .RequireRole("admin", "buyer"));
+    options.AddPolicy(SUPPLIER_RELATIONSHIP, policy =>
+                                        policy.RequireAuthenticatedUser()
+                                                .RequireRole("admin", "buyer"));
 
-options.AddPolicy(MANAGING_REQUESTS, policy =>
+    options.AddPolicy(MANAGING_REQUESTS, policy =>
+                                      policy.RequireAuthenticatedUser()
+                                            .RequireRole("admin", "requester", "buyer"));
+
+    options.AddPolicy(CREATE_REQUESTS, policy =>
+                                      policy.RequireAuthenticatedUser()
+                                            .RequireRole("admin", "requester"));
+
+    options.AddPolicy(ADMIN_ACCESS, policy =>
                                   policy.RequireAuthenticatedUser()
-                                        .RequireRole("admin", "requester", "buyer"));
+                                        .RequireRole("admin"));
 
-options.AddPolicy(CREATE_REQUESTS, policy =>
-                                  policy.RequireAuthenticatedUser()
-                                        .RequireRole("admin", "requester"));
-
-options.AddPolicy(ADMIN_ACCESS, policy =>
-                              policy.RequireAuthenticatedUser()
-                                    .RequireRole("admin"));
-    // =========================================================
-    options.AddPolicy("password_changed-policy", policy =>
+    options.AddPolicy(PASSWORD_CHANGED, policy =>
                               policy.RequireAuthenticatedUser()
                                     .RequireClaim("PasswordChanged"));
 });
@@ -64,15 +66,15 @@ options.AddPolicy(ADMIN_ACCESS, policy =>
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizePage("/Suppliers", SUPPLIER_RELATIONSHIP);
-
-    // -----------------------------------------------------------
-    options.Conventions.AuthorizePage("/", "password_changed-policy");
-
     options.Conventions.AuthorizePage("/Requests", MANAGING_REQUESTS);
     options.Conventions.AuthorizePage("/CreateRequest", MANAGING_REQUESTS);
     options.Conventions.AuthorizePage("/Orders", MANAGING_REQUESTS);
     options.Conventions.AuthorizePage("/CreateOrder", SUPPLIER_RELATIONSHIP);
+
+    options.Conventions.AuthorizeFolder("/", PASSWORD_CHANGED);
+
     options.Conventions.AuthorizeAreaPage("Identity", "/Account/Register", ADMIN_ACCESS);
+
     //options.Conventions.AuthorizePage("/Contact");
     //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
     //options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");
