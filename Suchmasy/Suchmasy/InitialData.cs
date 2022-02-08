@@ -185,6 +185,16 @@ namespace Suchmasy
                                     Status = RequestStatus.Submitted,
                                     Text = "This product is needed for confidential reasons!"
                                 },
+                                new Request(){
+                                    Id = Guid.NewGuid().ToString(),
+                                    Product = "Big chairs",
+                                    Quantity = 2,
+                                    RequesterId = requesterKiro.Id,
+                                    RequesterEmail = requesterKiro.Email,
+                                    PlacedOn = DateTime.Now,
+                                    Status = RequestStatus.Submitted,
+                                    Text = "This product is needed for confidential reasons!"
+                                },
                             };
 
                 dbContext.Requests.AddRange(requests);

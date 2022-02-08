@@ -46,23 +46,31 @@ namespace Suchmasy.Repos
             throw new NotImplementedException();
         }
 
-        public bool SetStatus(string delId, DeliveryStatus status)
+        public bool SetStatus(string delId, string driverId ,DeliveryStatus status)
         {
-            // var del = _dbContext.Deliveries.FirstOrDefault(r => r.Id.Equals(delId));
-            // if (del == null)
-            //     return false;
+            var del = _dbContext.Deliveries.FirstOrDefault(r => r.Id.Equals(delId));
+            if (del == null)
+                return false;
 
-            // del.Status = status;
-            // if (status == DeliveryStatus.Accepted || DeliveryStatus.Delivered)
-            // {
-            //     del.DeliveredOn = DateTime.MinValue;
-            // }
-            throw new NotImplementedException("Auuuu");
+            if (del.Status == status)
+            {
+                return false;
+            }
+
+            del.Status = status;
+            if (status == DeliveryStatus.Delivered)
+            {
+                del.DeliveredOn = DateTime.MinValue;
+            }
+            else if (status == DeliveryStatus.Accepted)
+            {
+                del.DriverId = driverId;
+            }
+
+            _dbContext.SaveChanges();
+            return true;
         }
 
-        public bool SetStatus(string reqId, string actionedById, RequestStatus status)
-        {
-            throw new NotImplementedException();
-        }
+     
     }
 }

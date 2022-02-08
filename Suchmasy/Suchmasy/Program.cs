@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // docker run -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=ASDasd123' -p 1401:1433 -d mcr.microsoft.com/mssql/server
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("ContainerConnection");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -36,6 +36,7 @@ const string SUPPLIER_RELATIONSHIP = "supplier_relationship";
 const string MANAGING_REQUESTS = "managing_requests";
 const string CREATE_REQUESTS = "create_requests";
 const string ADMIN_ACCESS = "admin_access";
+const string DELIVERY_MANAGEMENT = "delivery_management";
 const string PASSWORD_CHANGED = "password_changed";
 
 
@@ -57,6 +58,10 @@ builder.Services.AddAuthorization(options =>
                                   policy.RequireAuthenticatedUser()
                                         .RequireRole("admin"));
 
+    options.AddPolicy(DELIVERY_MANAGEMENT, policy =>
+                                policy.RequireAuthenticatedUser()
+                                      .RequireRole("admin", "driver"));
+
     options.AddPolicy(PASSWORD_CHANGED, policy =>
                               policy.RequireAuthenticatedUser()
                                     .RequireClaim("PasswordChanged"));
@@ -69,6 +74,7 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AuthorizePage("/CreateRequest", MANAGING_REQUESTS);
     options.Conventions.AuthorizePage("/Orders", MANAGING_REQUESTS);
     options.Conventions.AuthorizePage("/CreateOrder", SUPPLIER_RELATIONSHIP);
+    options.Conventions.AuthorizePage("/Deliveries", DELIVERY_MANAGEMENT);
 
     options.Conventions.AuthorizeFolder("/", PASSWORD_CHANGED);
 

@@ -32,6 +32,7 @@ namespace Suchmasy.Pages
                     DeliveredOn = del.DeliveredOn == new DateTime() ? "-" : del.DeliveredOn.ToString(),
                 });
             }
+            Deliveries = Deliveries.OrderByDescending(d => d.Status).ToList();
         }
 
         public void OnPost()
