@@ -11,11 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 // docker run -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=ASDasd123' -p 1401:1433 -d mcr.microsoft.com/mssql/server
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("ContainerConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
@@ -107,5 +106,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
-
+// ==============
 app.Run();

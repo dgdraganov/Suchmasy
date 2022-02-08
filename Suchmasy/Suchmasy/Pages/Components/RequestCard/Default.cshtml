@@ -22,13 +22,12 @@
                 <p class="card-text"><small class="text-muted">Closed on: @Model.ClosedOn</small></p>
             }
 
-            <div class="d-flex justify-content-between align-items-center mb-3"> 
+            <div class="d-flex justify-content-between align-items-center mb-3">
                 <input type="text" class="card-text" style="width: 180px" value="@Model.Id" readonly>
-                    <button onclick="copy('@Model.Id')" 
-                                id="@Model.Id" 
-                                class="btn btn-sm btn-success copy-button">Copy</button> 
+                <button onclick="copy('@Model.Id')" id="@Model.Id"
+                    class="btn btn-sm btn-success copy-button">Copy</button>
             </div>
-         
+
 
             @if (Model.Status == RequestStatus.Submitted)
             {

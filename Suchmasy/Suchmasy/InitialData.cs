@@ -92,8 +92,10 @@ namespace Suchmasy
             foreach (var prod in products)
             {
                 var exist = dbContext.Products.Any(p => p.ProductName == prod.ProductName);
-                if (!exist)
+                if (!exist){
                     dbContext.Products.AddRange(products);
+                    break;
+                } 
             }
 
             // -------------------- SUPPLIERS ---------------------------
@@ -132,8 +134,11 @@ namespace Suchmasy
             foreach (var supp in suppliers)
             {
                 var exist = dbContext.Suppliers.Any(s => s.BrandName == supp.BrandName);
-                if (!exist)
-                    dbContext.Suppliers.AddRange(suppliers);
+                if (!exist){
+                        dbContext.Suppliers.AddRange(suppliers);
+                        break;
+                }
+                    
             }
 
 
@@ -196,7 +201,7 @@ namespace Suchmasy
             var mitkoEmail = "mitko.mitkov@suchmasy.com";
             var kiroEmail = "kiro.kirov@suchmasy.com";
             var metoEmail = "meto.metov@suchmasy.com";
-            var requesterBuyerEmail = "requester.buyer@suchmasy.com";
+       
 
             const string ROLE_ADMIN = "admin";
             const string ROLE_BUYER = "buyer";

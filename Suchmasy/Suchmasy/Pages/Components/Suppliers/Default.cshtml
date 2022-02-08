@@ -12,14 +12,14 @@
 
             @foreach (var supp in Model)
             {
-        <div class="col-sm-6 col-md-4 col-lg-4">
+                <div class="col-sm-6 col-md-4 col-lg-4">
 
-                <div class="margin-20">
+                    <div class="margin-20">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title ">@supp.BrandName</h4>
-                                <p class="card-text">Produc:        @supp.Product.ProductName</p>
-                                <p class="card-text">Unit price:    @supp.UnitPrice EUR</p>
+                                <p class="card-text">Product: @supp.Product.ProductName</p>
+                                <p class="card-text">Unit price: @supp.UnitPrice EUR</p>
                                 <p class="card-text">Payment terms: @supp.PaymentTerms days</p>
 
                                 @if (supp.Enabled)
@@ -31,8 +31,8 @@
                                         <input type="hidden" id="UnitPrice" name="UnitPrice" value="@supp.UnitPrice" />
                                         <button type="submit" class="btn btn-success">Make order</button>
                                     </form>
-                                       @* <a asp-area="" asp-page="/CreateOrder" class="btn btn-primary" type="submit">
-                                            Make order
+                                    @* <a asp-area="" asp-page="/CreateOrder" class="btn btn-primary" type="submit">
+                                        Make order
                                         </a> *@
                                 }
                                 else
@@ -50,4 +50,3 @@
         </div>
     </div>
 </div>
-
