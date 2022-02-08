@@ -36,9 +36,15 @@
                 @if (User.IsInRole("requester") &&
                userId == Model.RequesterId)
                 {
-                    <a href="#" class="btn btn-warning">
+                    <form asp-page="/Requests" method="post">
+                        <input type="hidden" id="RequestId"  value="@Model.Id" />
+                        <button type="submit" class="btn btn-warning" asp-route-requestid="@Model.Id" asp-page-handler="delete"> 
+                            Cancel
+                        </button>
+                    </form>
+                    @* <a asp-page="/Requests" class="btn btn-warning">
                         Cancel
-                    </a>
+                        </a> *@
                 }
             }
             else if (Model.Status == RequestStatus.Completed)
