@@ -216,6 +216,7 @@ namespace Suchmasy
             const string ROLE_ADMIN = "admin";
             const string ROLE_BUYER = "buyer";
             const string ROLE_REQUESTER = "requester";
+            const string ROLE_DRIVER = "driver";
 
             // =========================== USERS ===============================
             // try add user "raiko.vasilev"
@@ -240,6 +241,9 @@ namespace Suchmasy
 
             // try add role "requester"
             tryCreateRole(roleManager, ROLE_REQUESTER);
+
+            // try add role "driver"
+            tryCreateRole(roleManager, ROLE_DRIVER);
 
 
             // ============================ USER ROLES ==============================
