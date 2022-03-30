@@ -85,15 +85,20 @@ namespace Suchmasy.Pages
                 RequestId = this.RequestId,
             };
 
-            var res = _requestRepo
+            var success = _requestRepo
                     .CompleteRequest(order.RequestId, userEmail);
+
+            if (!success)
+            {
+                return LocalRedirect("/Orders");
+            }
 
             _ordRepo.SaveOrder(order);
 
             Delivery del = new Delivery(){
                 Id = Guid.NewGuid().ToString(),
                 CreatedOn = DateTime.Now,
-                DestinationAddress = "Karnobat, ul Stara planina 5",
+                DestinationAddress = "Sofia, Business Park",
                 DriverEmail = null,
                 DriverId = null,
                 OrderId = order.Id,

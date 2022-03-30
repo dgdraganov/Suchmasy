@@ -1,103 +1,100 @@
 ﻿@page
+@using Microsoft.AspNetCore.Authorization
 @using Suchmasy.Models
 @model Suchmasy.Pages.DeliveryModel
+@inject IAuthorizationService AuthorizationService
 @{
-    @* var success = TempData["SuccessRequest"];
-    var errMsgs = TempData["ErrorMessages"]; *@
-@* 
-    if (success != null && (bool)success)
-    {
-        //$('#created-success').show();
-        <div id="created-success" class="alert alert-success alert-dismissible fade show" role="alert">
-            <h4 class="alert-heading">Request created!</h4>
-            <p>Your request is pending action from the responsible sourcing buyer. After the goods or services that you ordered
-                are received you will be notified via the official communication channels!</p>
-            <hr>
-            <p class="mb-0">Note! You can find and cancel the request at any point before its comletion.</p>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    }
-    else if (success != null && !(bool)success && errMsgs != null)
-    {
-        var errors = errMsgs as string[];
-        //$('#created-success').show();
-        <div id="created-success" class="alert alert-warning alert-dismissible fade show" role="alert">
-            <h4 class="alert-heading">Request not created!</h4>
-            <p>There was one or more problems creating your request:</p>
-            @foreach (var err in errors)
-            {
-                <div>
-                    @err
-                </div>
-            }
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    } *@
-} @*Request creation message SUCCESS/ERRORS*@
+  }
 
-@await Component.InvokeAsync("LeadingTitle", new{ Title = "Delivery", 
+@await Component.InvokeAsync("LeadingTitle", new{ Title = "Delivery",
                                                     Description = "Single delivery"})
 
 
 @* <section class="vh-100" style="background-color: #8c9eff;"> *@
-  <div class="container py-5 h-100">
+<div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-12">
-        <div class="card card-stepper text-black" style="border-radius: 16px;">
+        <div class="col-12">
+            <div class="card card-stepper text-black" style="border-radius: 16px;">
 
-          <div class="card-body p-5">
+                <div class="card-body p-5">
 
-            <div class="d-flex justify-content-between align-items-center mb-5">
-              <div>
-                <h5 class="mb-0">DELIVERY <span class="text-primary font-weight-bold">@Model.Delivery.Id</span></h5>
-              </div>
-              <div class="text-end">
-                <p class="mb-0">Expected Arrival <span class="text-primary">01/12/19</span></p>
-                <p class="mb-0">Order Id <span class="text-primary font-weight-bold">@Model.Delivery.OrderId</span></p>
-              </div>
+                    <div class="d-flex justify-content-between align-items-center mb-5">
+                        <div>
+                            <h5 class="mb-0">DELIVERY <span class="text-primary font-weight-bold">@Model.Delivery.Id</span></h5>
+                        </div>
+                        <div class="text-end">
+                            <p class="mb-0">Stauts <span class="text-primary">@Model.Delivery.Status</span></p>
+                            <p class="mb-0">Order Id <span class="text-primary font-weight-bold">@Model.Delivery.OrderId</span></p>
+                        </div>
+                    </div>
+
+                    <ul id="progressbar-2" class="d-flex justify-content-between mx-0 mt-0 mb-5 px-0 pt-0 pb-2">
+                        <li class="step0 active text-center" id="step1"></li>
+                        <li class="step0 active text-center" id="step2"></li>
+                        <li class="step0 text-muted text-end" id="step3"></li>
+                        @* <li class="step0 text-muted text-end" id="step4"></li>*@
+                    </ul>
+
+                    <div class="d-flex justify-content-between">
+                        <div class="d-lg-flex align-items-center">
+                            <i class="fas fa-clipboard-list fa-3x me-lg-4 mb-3 mb-lg-0"></i>
+                            <div>
+                                <p class="fw-bold mb-1">Delivery</p>
+                                <p class="fw-bold mb-0">Created</p>
+                            </div>
+                        </div>
+                        <div class="d-lg-flex align-items-center">
+                            <i class="fas fa-box-open fa-3x me-lg-4 mb-3 mb-lg-0"></i>
+                            <div>
+                                <p class="fw-bold mb-1">Delivery</p>
+                                <p class="fw-bold mb-0">Accepted</p>
+                            </div>
+                        </div>
+                        <div class="d-lg-flex align-items-center">
+                            <i class="fas fa-shipping-fast fa-3x me-lg-4 mb-3 mb-lg-0"></i>
+                            <div>
+                                <p class="fw-bold mb-1">Delivery</p>
+                                <p class="fw-bold mb-0">Completed</p>
+                            </div>
+                        </div>
+                   
+                    </div>
+
+                </div>
+
             </div>
-
-            <ul id="progressbar-2" class="d-flex justify-content-between mx-0 mt-0 mb-5 px-0 pt-0 pb-2">
-              <li class="step0 active text-center" id="step1"></li>
-              <li class="step0 active text-center" id="step2"></li>
-              <li class="step0 text-muted text-end" id="step4"></li>
-            </ul>
-
-            <div class="d-flex justify-content-between">
-              <div class="d-lg-flex align-items-center">
-                <i class="fas fa-clipboard-list fa-3x me-lg-4 mb-3 mb-lg-0"></i>
-                <div>
-                  <p class="fw-bold mb-1">Delivery</p>
-                  <p class="fw-bold mb-0">Created</p>
-                </div>
-              </div>
-              <div class="d-lg-flex align-items-center">
-                <i class="fas fa-box-open fa-3x me-lg-4 mb-3 mb-lg-0"></i>
-                <div>
-                  <p class="fw-bold mb-1">Delivery</p>
-                  <p class="fw-bold mb-0">Accepted</p>
-                </div>
-              </div>
-              <div class="d-lg-flex align-items-center">
-                <i class="fas fa-shipping-fast fa-3x me-lg-4 mb-3 mb-lg-0"></i>
-                <div>
-                  <p class="fw-bold mb-1">Delivery</p>
-                  <p class="fw-bold mb-0">Completed</p>
-                </div>
-              </div>
-              @* <div class="d-lg-flex align-items-center">
-                <i class="fas fa-home fa-3x me-lg-4 mb-3 mb-lg-0"></i>
-                <div>
-                  <p class="fw-bold mb-1">Order</p>
-                  <p class="fw-bold mb-0">Arrived</p>
-                </div>
-              </div> *@
-            </div>
-
-          </div>
-
         </div>
-      </div>
     </div>
-  </div>
+</div>
 @* </section> *@
+
+
+<div class="bottom-btns">
+
+    <form asp-page="/Delivery" method="post">
+
+        @if (@Model.Delivery.Status == DeliveryStatus.Accepted &&
+        @Model.Delivery.DriverId == Model.UserId)
+        {
+            <button type="submit"
+                class="btn btn-success btn-lg margin-20"
+                asp-route-delId="@Model.Delivery.Id"
+                asp-route-status="@DeliveryStatus.Delivered">
+                 <b>Complete</b>
+            </button>
+        }
+        else if (@Model.Delivery.Status == DeliveryStatus.Generated &&
+        AuthorizationService.AuthorizeAsync(User, "delivery_management").Result.Succeeded)
+        {
+            <button type="submit"
+                class="btn btn-info btn-lg margin-20"
+                asp-route-delId="@Model.Delivery.Id"
+                asp-route-status="@DeliveryStatus.Accepted">
+                <b>Accept</b>
+            </button>
+        } 
+    </form>
+
+    @*   <a asp-area="" asp-page="/Requests" class="btn btn-info btn-lg" role="button">View Requests</a>*@
+    @* <button class="btn btn-primary btn-lg" type="submit">Cancel</button>*@
+</div>

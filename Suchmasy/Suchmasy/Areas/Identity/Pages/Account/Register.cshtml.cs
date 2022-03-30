@@ -16,8 +16,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Suchmasy.Data;
 
 namespace Suchmasy.Areas.Identity.Pages.Account
 {
@@ -29,13 +31,15 @@ namespace Suchmasy.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _dbContext;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext dbContext)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -43,6 +47,7 @@ namespace Suchmasy.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _dbContext = dbContext;
         }
 
         /// <summary>
@@ -58,11 +63,19 @@ namespace Suchmasy.Areas.Identity.Pages.Account
         /// </summary>
         public string ReturnUrl { get; set; }
 
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
+
+  
+        public List<SelectListItem> Options { get; set; }
+
+        [BindProperty]
+        public string UserRole { get; set; }
+
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -97,6 +110,7 @@ namespace Suchmasy.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
         }
 
 
@@ -104,10 +118,30 @@ namespace Suchmasy.Areas.Identity.Pages.Account
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            Options = _dbContext.Roles.Select(r => new SelectListItem
+            {
+                Value = r.Name,
+                Text = r.Name,
+            }).ToList();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+
+            Options = _dbContext.Roles.Select(r => new SelectListItem
+            {
+                Value = r.Name,
+                Text = r.Name,
+            }).ToList();
+
+            if (!Options.Any(i => i.Value == UserRole))
+            {
+                ModelState.AddModelError(string.Empty, $"Invalid user role '{UserRole}'");
+                return Page();
+            }
+
+       
+
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
@@ -135,6 +169,9 @@ namespace Suchmasy.Areas.Identity.Pages.Account
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    // var user = await _userManager.GetUserAsync(user);
+                    var res = await _userManager.AddToRoleAsync(user, UserRole);
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

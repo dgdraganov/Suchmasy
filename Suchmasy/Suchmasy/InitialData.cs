@@ -185,6 +185,16 @@ namespace Suchmasy
                                     Status = RequestStatus.Submitted,
                                     Text = "This product is needed for confidential reasons!"
                                 },
+                                new Request(){
+                                    Id = Guid.NewGuid().ToString(),
+                                    Product = "Big chairs",
+                                    Quantity = 2,
+                                    RequesterId = requesterKiro.Id,
+                                    RequesterEmail = requesterKiro.Email,
+                                    PlacedOn = DateTime.Now,
+                                    Status = RequestStatus.Submitted,
+                                    Text = "This product is needed for confidential reasons!"
+                                },
                             };
 
                 dbContext.Requests.AddRange(requests);
@@ -206,6 +216,7 @@ namespace Suchmasy
             const string ROLE_ADMIN = "admin";
             const string ROLE_BUYER = "buyer";
             const string ROLE_REQUESTER = "requester";
+            const string ROLE_DRIVER = "driver";
 
             // =========================== USERS ===============================
             // try add user "raiko.vasilev"
@@ -230,6 +241,9 @@ namespace Suchmasy
 
             // try add role "requester"
             tryCreateRole(roleManager, ROLE_REQUESTER);
+
+            // try add role "driver"
+            tryCreateRole(roleManager, ROLE_DRIVER);
 
 
             // ============================ USER ROLES ==============================
